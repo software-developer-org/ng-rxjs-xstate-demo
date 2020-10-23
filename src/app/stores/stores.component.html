@@ -1,16 +1,22 @@
 <h1 fxLayout="row" fxLayoutAlign="center center">List of Stores</h1>
 
+<div fxLayout="row">
+    <button fxFlex="grow" mat-button (click)="getNewStores()">Get new stores</button>
+</div>
+
 <div fxLayout="row wrap">
     <div *ngFor="let store of stores">
         <mat-card class="example-card">
             <mat-card-header>
-                <h2>{{store.name}}</h2>
+                <strong>{{store.name}}</strong>
             </mat-card-header>
             <mat-card-content>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Enim excepturi odio cum eligendi, veniam dolores, 
-                fuga autem sunt placeat nobis inventore non nihil similique nisi, 
-                reprehenderit officiis assumenda aut asperiores.</mat-card-content>
+                <small>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Enim excepturi odio cum eligendi, veniam dolores,
+                    fuga autem ...
+                </small>
+            </mat-card-content>
         </mat-card>
     </div>
 </div>

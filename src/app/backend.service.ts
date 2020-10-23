@@ -12,10 +12,14 @@ export class BackendService {
   stores: Store[] = [];
 
   constructor() {
-    new Array(5).fill('').forEach((_, index) => this.stores.push(new Store('Store ' + index)));
+    new Array(3).fill('').forEach((_, index) => this.stores.push(new Store('Store ' + index)));
   }
 
   getStores(): Observable<Store[]> {
     return of(this.stores);
+  }
+
+  addNewStore(): void {
+    this.stores.push(new Store('Store ' + (this.stores.length + 1)));
   }
 }

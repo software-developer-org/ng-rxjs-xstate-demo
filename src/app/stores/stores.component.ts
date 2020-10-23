@@ -13,7 +13,16 @@ export class StoresComponent implements OnInit {
   constructor(private backendService: BackendService) { }
 
   ngOnInit(): void {
+    this.loadStores();
+  }
+
+  loadStores(): void {
     this.backendService.getStores().subscribe(stores => this.stores = stores);
+  }
+
+  getNewStores(): void {
+    this.backendService.addNewStore();
+    this.loadStores();
   }
 
 }
