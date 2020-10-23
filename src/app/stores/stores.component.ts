@@ -17,7 +17,14 @@ export class StoresComponent implements OnInit {
   }
 
   loadStores(): void {
-    this.backendService.getStores().subscribe(stores => this.stores = stores);
+    this.backendService.getStores().subscribe(stores => {
+      this.stores = [];
+      stores.forEach((store, index) => {
+        setTimeout(() => {
+          this.stores.push(store);
+        }, index * 500 + 500);
+      });
+    });
   }
 
   getNewStores(): void {
