@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { BackendService, Store } from '../backend.service';
+import { BackendService, Entity } from '../backend.service';
 
 @Component({
   selector: 'app-stores',
@@ -9,21 +9,21 @@ import { BackendService, Store } from '../backend.service';
 })
 export class StoresComponent implements OnInit {
 
-  stores: Store[];
+  entities: Entity[];
 
   constructor(private backendService: BackendService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.loadStores();
+    this.loadData();
   }
 
-  loadStores(): void {
+  loadData(): void {
     this.backendService.getStores().subscribe(stores => {
       this.spinner.show();
-      this.stores = [];
+      this.entities = [];
       stores.forEach((store, index) => {
         setTimeout(() => {
-          this.stores.push(store);
+          this.entities.push(store);
           if (stores.length === index + 1) {
             this.spinner.hide();
           }
@@ -32,9 +32,9 @@ export class StoresComponent implements OnInit {
     });
   }
 
-  getNewStores(): void {
+  loadAdditionalData(): void {
     this.backendService.addNewStore();
-    this.loadStores();
+    this.loadData();
   }
 
 }

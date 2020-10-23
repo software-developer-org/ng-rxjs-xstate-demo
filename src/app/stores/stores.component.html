@@ -5,14 +5,14 @@
 </ngx-spinner>
 
 <div fxLayout="row">
-    <button fxFlex="grow" mat-button (click)="getNewStores()">Get new stores</button>
+    <button fxFlex="grow" mat-button (click)="loadAdditionalData()">Get new stores</button>
 </div>
 
 <div fxLayout="row wrap">
-    <a *ngFor="let store of stores" [routerLink]="['/stores', store.id, 'products']">
+    <a *ngFor="let entity of entities" [routerLink]="['/stores', entity.id, 'products']">
         <mat-card class="example-card">
             <mat-card-header>
-                <strong>{{store.name}}</strong>
+                <strong>{{entity.name}}</strong>
             </mat-card-header>
             <mat-card-content>
                 <small>
