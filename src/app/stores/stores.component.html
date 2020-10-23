@@ -1,4 +1,4 @@
-<h1 fxLayout="row" fxLayoutAlign="center center">List of Stores</h1>
+<h3 fxLayout="row" fxLayoutAlign="center center">List of Stores</h3>
 
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
     <p style="font-size: 20px; color: white;">Loading...</p>
@@ -9,7 +9,7 @@
 </div>
 
 <div fxLayout="row wrap">
-    <div *ngFor="let store of stores">
+    <a *ngFor="let store of stores" [routerLink]="['/stores', store.id, 'products']">
         <mat-card class="example-card">
             <mat-card-header>
                 <strong>{{store.name}}</strong>
@@ -22,5 +22,5 @@
                 </small>
             </mat-card-content>
         </mat-card>
-    </div>
+    </a>
 </div>
