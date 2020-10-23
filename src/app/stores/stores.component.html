@@ -1,1 +1,16 @@
-<p>stores works!</p>
+<h1 fxLayout="row" fxLayoutAlign="center center">List of Stores</h1>
+
+<div fxLayout="row wrap">
+    <div *ngFor="let store of stores">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <h2>{{store.name}}</h2>
+            </mat-card-header>
+            <mat-card-content>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Enim excepturi odio cum eligendi, veniam dolores, 
+                fuga autem sunt placeat nobis inventore non nihil similique nisi, 
+                reprehenderit officiis assumenda aut asperiores.</mat-card-content>
+        </mat-card>
+    </div>
+</div>
