@@ -10,9 +10,11 @@ export class Entity {
 export class BackendService {
 
   stores: Entity[] = [];
+  products: Entity[] = [];
 
   constructor() {
     new Array(3).fill('').forEach((_, index) => this.stores.push(new Entity(index, 'Store ' + index)));
+    new Array(10).fill('').forEach((_, index) => this.products.push(new Entity(index, 'Product ' + index)));
   }
 
   getStores(): Observable<Entity[]> {
@@ -22,5 +24,9 @@ export class BackendService {
   addNewStore(): void {
     const id = this.stores.length + 1;
     this.stores.push(new Entity(id, 'Store ' + id));
+  }
+
+  getProducts(): Observable<Entity[]> {
+    return of(this.products);
   }
 }

@@ -1,1 +1,22 @@
-<p>products works!</p>
+<h3 fxLayout="row" fxLayoutAlign="center center">List of Stores</h3>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white;">Loading...</p>
+</ngx-spinner>
+
+<div fxLayout="row wrap">
+    <a *ngFor="let entity of entities" [routerLink]="['/stores', entity.id, 'products']">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <strong>{{entity.name}}</strong>
+            </mat-card-header>
+            <mat-card-content>
+                <small>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Enim excepturi odio cum eligendi, veniam dolores,
+                    fuga autem ...
+                </small>
+            </mat-card-content>
+        </mat-card>
+    </a>
+</div>
