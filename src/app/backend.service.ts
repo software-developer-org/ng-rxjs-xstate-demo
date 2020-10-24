@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 export class Entity {
-  constructor(public id: number, public name: string) {}
+  constructor(public id: number, public name: string, public description: string) {}
 }
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,10 @@ export class BackendService {
   products: Entity[] = [];
 
   constructor() {
-    new Array(3).fill('').forEach((_, index) => this.stores.push(new Entity(index, 'Store ' + index)));
-    new Array(10).fill('').forEach((_, index) => this.products.push(new Entity(index, 'Product ' + index)));
+    new Array(3).fill('').forEach((_, index) =>
+    this.stores.push(new Entity(index, 'Store ' + index, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim excepturi odio cum eligendi, veniam dolores, fuga autem ...')));
+    new Array(10).fill('').forEach((_, index) =>
+    this.products.push(new Entity(index, 'Product ' + index, 'Buy me, consume me, happiness!')));
   }
 
   getStores(): Observable<Entity[]> {
@@ -31,7 +33,7 @@ export class BackendService {
 
   addNewStore(): void {
     const id = this.stores.length + 1;
-    this.stores.push(new Entity(id, 'Store ' + id));
+    this.stores.push(new Entity(id, 'Store ' + id, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim excepturi odio cum eligendi, veniam dolores, fuga autem ...'));
   }
 
   getProducts(): Observable<Entity[]> {
