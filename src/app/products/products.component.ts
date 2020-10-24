@@ -19,7 +19,6 @@ export class ProductsComponent implements OnInit {
 
   loadData(): void {
     this.backendService.getProducts().subscribe(product => {
-      this.spinner.show();
       this.entities = [];
       product.forEach((store, index) => {
         setTimeout(() => {
@@ -30,6 +29,7 @@ export class ProductsComponent implements OnInit {
         }, index * 500 + 500);
       });
     });
+    this.spinner.show();
   }
 
 }

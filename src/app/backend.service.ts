@@ -18,7 +18,15 @@ export class BackendService {
   }
 
   getStores(): Observable<Entity[]> {
-    return of(this.stores);
+    const obs$ = new Observable<Entity[]>(subscriber => {
+      console.log('>>>stores request to backend');
+      setTimeout(() => {
+        console.log('>>>stores respond to client');
+        subscriber.next(this.stores);
+        subscriber.complete();
+      }, 2000);
+    });
+    return obs$;
   }
 
   addNewStore(): void {
@@ -27,6 +35,14 @@ export class BackendService {
   }
 
   getProducts(): Observable<Entity[]> {
-    return of(this.products);
+    const obs$ = new Observable<Entity[]>(subscriber => {
+      console.log('>>>products request to backend');
+      setTimeout(() => {
+        console.log('>>>products respond to client');
+        subscriber.next(this.stores);
+        subscriber.complete();
+      }, 2000);
+    });
+    return obs$;
   }
 }
