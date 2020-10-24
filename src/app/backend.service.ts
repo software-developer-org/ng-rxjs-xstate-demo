@@ -24,7 +24,7 @@ export class BackendService {
         console.log('>>>stores respond to client');
         subscriber.next(this.stores);
         subscriber.complete();
-      }, 2000);
+      }, 1000);
     });
     return obs$;
   }
@@ -41,7 +41,7 @@ export class BackendService {
         console.log('>>>products respond to client');
         subscriber.next(this.products);
         subscriber.complete();
-      }, 2000);
+      }, 1000);
     });
     return obs$;
   }

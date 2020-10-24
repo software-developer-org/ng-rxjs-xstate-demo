@@ -26,7 +26,7 @@ export class ProductsComponent implements OnInit {
           if (product.length === index + 1) {
             this.spinner.hide();
           }
-        }, index * 500 + 500);
+        }, index * 300 + 300);
       });
     });
     this.spinner.show();
