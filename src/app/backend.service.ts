@@ -39,7 +39,7 @@ export class BackendService {
       console.log('>>>products request to backend');
       setTimeout(() => {
         console.log('>>>products respond to client');
-        subscriber.next(this.stores);
+        subscriber.next(this.products);
         subscriber.complete();
       }, 2000);
     });
