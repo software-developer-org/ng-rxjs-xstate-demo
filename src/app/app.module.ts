@@ -8,15 +8,15 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EntityCardComponent } from './entity-card/entity-card.component';
-import { ProductsComponent } from './products/products.component';
+import { StoreComponent } from './store/store.component';
 import { StoresComponent } from './stores/stores.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StoresComponent,
-    ProductsComponent,
-    EntityCardComponent
+    EntityCardComponent,
+    StoreComponent
   ],
   imports: [
     BrowserModule,

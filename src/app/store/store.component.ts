@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BackendService, Entity } from '../backend.service';
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+  selector: 'app-store',
+  templateUrl: './store.component.html',
+  styleUrls: ['./store.component.scss']
 })
-export class ProductsComponent implements OnInit {
+export class StoreComponent implements OnInit {
 
-  entities: Entity[];
+  @Input() store: Entity;
+  products: Entity[];
 
   constructor(private backendService: BackendService, private spinner: NgxSpinnerService) { }
 
@@ -19,10 +20,10 @@ export class ProductsComponent implements OnInit {
 
   loadData(): void {
     this.backendService.getProducts().subscribe(product => {
-      this.entities = [];
+      this.products = [];
       product.forEach((store, index) => {
         setTimeout(() => {
-          this.entities.push(store);
+          this.products.push(store);
           if (product.length === index + 1) {
             this.spinner.hide();
           }
