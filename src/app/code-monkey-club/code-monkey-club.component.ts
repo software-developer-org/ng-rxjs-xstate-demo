@@ -73,4 +73,8 @@ export class CodeMonkeyClubComponent implements OnInit {
     const selected = this.selected.some(s => s.id === id);
     return selected;
   }
+
+  startCoding(): void {
+    console.log('>>>>coding heavily');
+  }
 }
