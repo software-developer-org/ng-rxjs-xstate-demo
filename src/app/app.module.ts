@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { EntityCardComponent } from './entity-card/entity-card.component';
 import { ProductsComponent } from './products/products.component';
 import { StoresComponent } from './stores/stores.component';
 
@@ -14,7 +15,8 @@ import { StoresComponent } from './stores/stores.component';
   declarations: [
     AppComponent,
     StoresComponent,
-    ProductsComponent
+    ProductsComponent,
+    EntityCardComponent
   ],
   imports: [
     BrowserModule,

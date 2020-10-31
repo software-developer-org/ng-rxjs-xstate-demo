@@ -9,7 +9,7 @@ import { BackendService, Entity } from '../backend.service';
 })
 export class StoresComponent implements OnInit {
 
-  entities: Entity[];
+  stores: Entity[];
 
   constructor(private backendService: BackendService, private spinner: NgxSpinnerService) { }
 
@@ -19,10 +19,10 @@ export class StoresComponent implements OnInit {
 
   loadData(): void {
     this.backendService.getStores().subscribe(stores => {
-      this.entities = [];
+      this.stores = [];
       stores.forEach((store, index) => {
         setTimeout(() => {
-          this.entities.push(store);
+          this.stores.push(store);
           if (stores.length === index + 1) {
             this.spinner.hide();
           }
