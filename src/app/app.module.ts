@@ -7,16 +7,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CodeMonkeyClubComponent } from './code-monkey-club/code-monkey-club.component';
+import { CodeMonkeyClubsComponent } from './code-monkey-clubs/code-monkey-clubs.component';
 import { EntityCardComponent } from './entity-card/entity-card.component';
-import { StoreComponent } from './store/store.component';
-import { StoresComponent } from './stores/stores.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    StoresComponent,
     EntityCardComponent,
-    StoreComponent
+    CodeMonkeyClubsComponent,
+    CodeMonkeyClubComponent
   ],
   imports: [
     BrowserModule,

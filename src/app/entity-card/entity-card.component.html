@@ -3,8 +3,8 @@
     <strong>{{ entity.name }}</strong>
   </mat-card-header>
   <mat-card-content>
-    <small>
-      {{ entity.description }}
+    <small *ngFor="let line of entity.description">
+      {{ line }}
     </small>
   </mat-card-content>
 </mat-card>

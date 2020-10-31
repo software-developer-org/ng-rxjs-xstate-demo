@@ -1,0 +1,32 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<h3 fxLayout="row" fxLayoutAlign="center center">Welcome Consume Monkeys!</h3>
+
+<div>
+  <mat-card class="example-card">
+    <mat-card-title>
+      {{ club ? club.name : "loading club details" }}
+    </mat-card-title>
+
+    <mat-card-content>
+      <div>
+        {{ rulez ? rulez.name : "loading club rulez" }}
+      </div>
+      <div *ngIf="rulez">
+        <div *ngFor="let rule of rulez.description">{{ rule }}</div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div fxLayout="row wrap">
+  <app-entity-card *ngFor="let member of members" [entity]="member">
+  </app-entity-card>
+</div>

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { StoreComponent } from './store/store.component';
-import { StoresComponent } from './stores/stores.component';
+import { CodeMonkeyClubComponent } from './code-monkey-club/code-monkey-club.component';
+import { CodeMonkeyClubsComponent } from './code-monkey-clubs/code-monkey-clubs.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/store', pathMatch: 'full' },
-  { path: 'store', component: StoresComponent },
-  { path: 'store/:id', component: StoreComponent },
+  { path: '', redirectTo: '/code-monkey-club', pathMatch: 'full' },
+  { path: 'code-monkey-club', component: CodeMonkeyClubsComponent },
+  { path: 'code-monkey-club/:id', component: CodeMonkeyClubComponent },
 ];
 
 @NgModule({

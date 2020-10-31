@@ -1,4 +1,4 @@
-<h3 fxLayout="row" fxLayoutAlign="center center">List of Stores</h3>
+<h3 fxLayout="row" fxLayoutAlign="center center">List of Code Monkey Clubs</h3>
 
 <ngx-spinner
   bdColor="rgba(51,51,51,0.8)"
@@ -11,12 +11,12 @@
 
 <div fxLayout="row">
   <button fxFlex="grow" mat-button (click)="loadAdditionalData()">
-    Get new stores
+    Add New Code Monkey Club
   </button>
 </div>
 
 <div fxLayout="row wrap">
-  <a *ngFor="let store of stores" [routerLink]="['/store', store.id]">
-    <app-entity-card [entity]="store"> </app-entity-card>
+  <a *ngFor="let club of clubs" [routerLink]="['/code-monkey-club', club.id]">
+    <app-entity-card [entity]="club"> </app-entity-card>
   </a>
 </div>
