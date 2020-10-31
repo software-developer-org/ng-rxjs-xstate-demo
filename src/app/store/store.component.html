@@ -12,17 +12,23 @@
 </h3>
 
 <div>
-  <h3 fxLayout="row wrap" fxLayoutAlign="center center">Store Details</h3>
-  <h4>{{ store ? store.name : "loading store details" }}</h4>
-  <div>
-    <address>
-      {{
-        address
-          ? "Street " + address.name + ", " + address.description
-          : "loading address"
-      }}
-    </address>
-  </div>
+  <mat-card class="example-card">
+    <mat-card-title> Store Details </mat-card-title>
+
+    <mat-card-subtitle>
+      {{ store ? store.name : "loading store details" }}
+    </mat-card-subtitle>
+
+    <mat-card-content>
+      <address>
+        {{
+          address
+            ? "Street " + address.name + ", " + address.description
+            : "loading address"
+        }}
+      </address>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <div fxLayout="row wrap">
