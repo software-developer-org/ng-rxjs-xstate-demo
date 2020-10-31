@@ -26,7 +26,7 @@ export class StoresComponent implements OnInit {
           if (stores.length === index + 1) {
             this.spinner.hide();
           }
-        }, index * 300 + 300);
+        }, index * 300);
       });
     });
     this.spinner.show();

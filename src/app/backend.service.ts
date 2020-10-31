@@ -97,7 +97,7 @@ export class BackendService {
         console.log('>>>products respond to client');
         subscriber.next(this.products);
         subscriber.complete();
-      }, 1000);
+      }, 200);
     });
     return obs$;
   }
