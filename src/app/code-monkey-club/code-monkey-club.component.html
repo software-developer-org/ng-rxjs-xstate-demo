@@ -27,6 +27,6 @@
 </div>
 
 <div fxLayout="row wrap">
-  <app-entity-card *ngFor="let member of members" [entity]="member">
+  <app-entity-card *ngFor="let member of members" [entity]="member" (click)="select(member)" [class.selected]="isSelected(member.id)">
   </app-entity-card>
 </div>

@@ -13,6 +13,8 @@ export class CodeMonkeyClubComponent implements OnInit {
   rulez: Entity;
   members: Entity[];
 
+  selected: Entity[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private backendService: BackendService,
@@ -49,6 +51,26 @@ export class CodeMonkeyClubComponent implements OnInit {
       });
     });
     this.spinner.show();
+  }
 
+  select(member: Entity): void {
+    const deselect = this.selected.find((s) => s.id === member.id);
+    if (deselect) {
+      this.selected = this.selected.filter((s) => s.id !== member.id);
+      console.log('deselected', member.id);
+      return;
+    }
+
+    if (this.selected.length >= 2) {
+      return;
+    }
+
+    console.log('selected', member.id);
+    this.selected.push(member);
+  }
+
+  isSelected(id: number): boolean {
+    const selected = this.selected.some(s => s.id === id);
+    return selected;
   }
 }
