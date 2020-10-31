@@ -8,6 +8,13 @@ export class Entity {
     public description: string
   ) {}
 }
+
+export function getTime(): string {
+  const now = new Date();
+  return now.getHours() + ':' + now.getMinutes() + ':' + (now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds()) +
+   '.' + now.getMilliseconds();
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -41,13 +48,13 @@ export class BackendService {
   }
 
   getStores(): Observable<Entity[]> {
+    console.log(getTime(), 'Request GET /stores');
     const obs$ = new Observable<Entity[]>((subscriber) => {
-      console.log('>>>stores request to backend');
       setTimeout(() => {
-        console.log('>>>stores respond to client');
+        console.log(getTime(), 'Response GET /stores');
         subscriber.next(this.stores);
         subscriber.complete();
-      }, 200);
+      }, 1000);
     });
     return obs$;
   }
@@ -64,10 +71,10 @@ export class BackendService {
   }
 
   getStoreById(id: number): Observable<Entity> {
+    console.log(getTime(), `Request GET /store/${id}`);
     const obs$ = new Observable<Entity>((subscriber) => {
-      console.log(`>>>store ${id} request to backend`);
       setTimeout(() => {
-        console.log('>>>stores respond to client');
+        console.log(getTime(), `Response GET /store/${id}`);
         const entity = this.stores.find((e) => e.id === id);
         subscriber.next(entity);
         subscriber.complete();
@@ -78,9 +85,9 @@ export class BackendService {
 
   getAddressByStore(storeId: number): Observable<Entity> {
     const obs$ = new Observable<Entity>((subscriber) => {
-      console.log(`>>>address for store ${storeId} request to backend`);
+      console.log(getTime(), `Request GET /store/${storeId}/address`);
       setTimeout(() => {
-        console.log('>>>stores respond to client');
+        console.log(getTime(), `Response GET /store/${storeId}/address`);
         subscriber.next(
           new Entity(storeId, 'Tiny Lane ' + storeId, '123-Acme')
         );
@@ -92,9 +99,9 @@ export class BackendService {
 
   getProducts(): Observable<Entity[]> {
     const obs$ = new Observable<Entity[]>((subscriber) => {
-      console.log('>>>products request to backend');
+      console.log(getTime(), `Request GET /products`);
       setTimeout(() => {
-        console.log('>>>products respond to client');
+        console.log(getTime(), `Response GET /products`);
         subscriber.next(this.products);
         subscriber.complete();
       }, 200);

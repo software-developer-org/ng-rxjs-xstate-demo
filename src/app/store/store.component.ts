@@ -36,15 +36,16 @@ export class StoreComponent implements OnInit {
     });
 
     // get products
-    this.backendService.getProducts().subscribe((product) => {
+    this.backendService.getProducts().subscribe((products) => {
       this.products = [];
-      product.forEach((store, index) => {
+      products.forEach((product, index) => {
         setTimeout(() => {
-          this.products.push(store);
-          if (product.length === index + 1) {
+          console.log('displaying product', product.id);
+          this.products.push(product);
+          if (products.length === index + 1) {
             this.spinner.hide();
           }
-        }, index * 200);
+        }, index * 200 + 200);
       });
     });
     this.spinner.show();

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { BackendService, Entity } from '../backend.service';
+import { BackendService, Entity, getTime } from '../backend.service';
 
 @Component({
   selector: 'app-stores',
@@ -22,11 +22,12 @@ export class StoresComponent implements OnInit {
       this.stores = [];
       stores.forEach((store, index) => {
         setTimeout(() => {
+          console.log(getTime(), 'displaying store', store.id);
           this.stores.push(store);
           if (stores.length === index + 1) {
             this.spinner.hide();
           }
-        }, index * 300);
+        }, index * 500 + 500);
       });
     });
     this.spinner.show();
