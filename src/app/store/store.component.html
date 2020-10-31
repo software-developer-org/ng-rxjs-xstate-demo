@@ -11,6 +11,20 @@
   Amazing Products for Consume Monkeys
 </h3>
 
+<div>
+  <h3 fxLayout="row wrap" fxLayoutAlign="center center">Store Details</h3>
+  <h4>{{ store ? store.name : "loading store details" }}</h4>
+  <div>
+    <address>
+      {{
+        address
+          ? "Street " + address.name + ", " + address.description
+          : "loading address"
+      }}
+    </address>
+  </div>
+</div>
+
 <div fxLayout="row wrap">
   <app-entity-card *ngFor="let product of products" [entity]="product">
   </app-entity-card>

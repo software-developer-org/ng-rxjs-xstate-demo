@@ -1,25 +1,41 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BackendService, Entity } from '../backend.service';
 
 @Component({
   selector: 'app-store',
   templateUrl: './store.component.html',
-  styleUrls: ['./store.component.scss']
+  styleUrls: ['./store.component.scss'],
 })
 export class StoreComponent implements OnInit {
-
-  @Input() store: Entity;
+  store: Entity;
+  address: Entity;
   products: Entity[];
 
-  constructor(private backendService: BackendService, private spinner: NgxSpinnerService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private backendService: BackendService,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {
     this.loadData();
+
+    // get store
+    const id = Number.parseInt(this.route.snapshot.paramMap.get('id'), 10);
+    this.backendService.getStoreById(id).subscribe((store) => {
+      this.store = store;
+    });
+
+    // get address
+    this.backendService.getAddressByStore(id).subscribe((address) => {
+      this.address = address;
+    });
   }
 
   loadData(): void {
-    this.backendService.getProducts().subscribe(product => {
+    this.backendService.getProducts().subscribe((product) => {
       this.products = [];
       product.forEach((store, index) => {
         setTimeout(() => {
@@ -32,5 +48,4 @@ export class StoreComponent implements OnInit {
     });
     this.spinner.show();
   }
-
 }
