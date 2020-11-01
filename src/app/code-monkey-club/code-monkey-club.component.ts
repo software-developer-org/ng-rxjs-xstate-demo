@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { from } from 'rxjs';
 import { BackendService, Entity } from '../backend.service';
 
 @Component({
@@ -14,6 +15,8 @@ export class CodeMonkeyClubComponent implements OnInit {
   members: Entity[];
 
   selected: Entity[] = [];
+
+  boxring = ``;
 
   constructor(
     private route: ActivatedRoute,
@@ -70,11 +73,39 @@ export class CodeMonkeyClubComponent implements OnInit {
   }
 
   isSelected(id: number): boolean {
-    const selected = this.selected.some(s => s.id === id);
+    const selected = this.selected.some((s) => s.id === id);
     return selected;
   }
 
   startCoding(): void {
     console.log('>>>>coding heavily');
+    const monkey1 = this.selected[0].id;
+    const monkey2 = this.selected[1].id;
+    const random = Math.random();
+    const winner = random < 0.5 ? monkey1 : monkey2;
+    const loser = winner === monkey1 ? monkey2 : monkey1;
+    this.boxring = `Code monkey ${monkey1} and ${monkey2} starts coding...`;
+
+    const rounds = [
+      {
+        round: 1,
+        text: `Round 1: Code monkey ${monkey1} and ${monkey2} starts coding...`,
+      },
+      {
+        round: 2,
+        text: `Round 2: Monkey ${loser} got hit by BadException...`,
+      },
+      {
+        round: 3,
+        text: `Round 3: Monkey ${winner} gets sources compiled ... and wins!`,
+      },
+    ];
+
+    from(rounds).subscribe((round) => {
+      setTimeout(() => {
+        this.boxring += `
+${round.text}`;
+      }, round.round * 1000);
+    });
   }
 }

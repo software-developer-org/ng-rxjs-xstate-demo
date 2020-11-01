@@ -26,16 +26,23 @@
   </mat-card>
 </div>
 
-<div fxLayout="row">
+<div fxLayout="row wrap">
   <div fxFlex="30" fxLayoutAlign="center center">
     {{ (selected.length >= 1 ? selected[0].name : "") + " >>>" }}
   </div>
-  <button fxFlex="40" fxLayoutAlign="center center" mat-button [disabled]="selected.length < 2" (click)="startCoding()">
+  <button
+    fxFlex="40"
+    fxLayoutAlign="center center"
+    mat-button
+    [disabled]="selected.length < 2"
+    (click)="startCoding()"
+  >
     Start Coding!
   </button>
   <div fxFlex="30" fxLayoutAlign="center center">
     {{ " \<\<\<" + (selected.length === 2 ? selected[1].name : "") }}
   </div>
+  <textarea fxFlex="grow" class="box-ring">{{ boxring }}</textarea>
 </div>
 
 <div fxLayout="row wrap">
