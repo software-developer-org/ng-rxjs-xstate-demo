@@ -78,13 +78,12 @@ export class CodeMonkeyClubComponent implements OnInit {
   }
 
   startCoding(): void {
-    console.log('>>>>coding heavily');
     const monkey1 = this.selected[0].id;
     const monkey2 = this.selected[1].id;
     const random = Math.random();
     const winner = random < 0.5 ? monkey1 : monkey2;
     const loser = winner === monkey1 ? monkey2 : monkey1;
-    this.boxring = `Code monkey ${monkey1} and ${monkey2} starts coding...`;
+    this.boxring = `Code monkey ${monkey1} and ${monkey2} starts coding heavily...`;
 
     const rounds = [
       {
@@ -103,6 +102,7 @@ export class CodeMonkeyClubComponent implements OnInit {
 
     from(rounds).subscribe((round) => {
       setTimeout(() => {
+        console.log(round.text);
         this.boxring += `
 ${round.text}`;
       }, round.round * 1000);
