@@ -28,19 +28,19 @@
 
 <div fxLayout="row wrap">
   <div fxFlex="30" fxLayoutAlign="center center">
-    {{ (selected.length >= 1 ? selected[0].name : "") + " >>>" }}
+    {{ (challengers.length >= 1 ? challengers[0].name : "") + " >>>" }}
   </div>
   <button
     fxFlex="40"
     fxLayoutAlign="center center"
     mat-button
-    [disabled]="selected.length < 2"
-    (click)="startCoding()"
+    [disabled]="challengers.length < 2"
+    (click)="startChallenge()"
   >
-    Start Coding!
+    Start Code Challenge!
   </button>
   <div fxFlex="30" fxLayoutAlign="center center">
-    {{ " \<\<\<" + (selected.length === 2 ? selected[1].name : "") }}
+    {{ " \<\<\<" + (challengers.length === 2 ? challengers[1].name : "") }}
   </div>
   <textarea fxFlex="grow" class="box-ring">{{ boxring }}</textarea>
 </div>
@@ -49,8 +49,8 @@
   <app-entity-card
     *ngFor="let member of members"
     [entity]="member"
-    (click)="select(member)"
-    [class.selected]="isSelected(member.id)"
+    (click)="enterChallenger(member)"
+    [class.challengers]="isChallenger(member.id)"
   >
   </app-entity-card>
 </div>

@@ -14,7 +14,10 @@ export class CodeMonkeyClubComponent implements OnInit {
   rulez: Entity;
   members: Entity[];
 
-  selected: Entity[] = [];
+  /**
+   * Two coders required for a challenge
+   */
+  challengers: Entity[] = [];
 
   boxring = ``;
 
@@ -56,30 +59,30 @@ export class CodeMonkeyClubComponent implements OnInit {
     this.spinner.show();
   }
 
-  select(member: Entity): void {
-    const deselect = this.selected.find((s) => s.id === member.id);
-    if (deselect) {
-      this.selected = this.selected.filter((s) => s.id !== member.id);
-      console.log('deselected', member.id);
+  enterChallenger(member: Entity): void {
+    const leaveChallenger = this.challengers.find((s) => s.id === member.id);
+    if (leaveChallenger) {
+      this.challengers = this.challengers.filter((s) => s.id !== member.id);
+      console.log('challenger leaving', member.id);
       return;
     }
 
-    if (this.selected.length >= 2) {
+    if (this.challengers.length >= 2) {
       return;
     }
 
-    console.log('selected', member.id);
-    this.selected.push(member);
+    console.log('challenger entered', member.id);
+    this.challengers.push(member);
   }
 
-  isSelected(id: number): boolean {
-    const selected = this.selected.some((s) => s.id === id);
+  isChallenger(id: number): boolean {
+    const selected = this.challengers.some((s) => s.id === id);
     return selected;
   }
 
-  startCoding(): void {
-    const monkey1 = this.selected[0].id;
-    const monkey2 = this.selected[1].id;
+  startChallenge(): void {
+    const monkey1 = this.challengers[0].id;
+    const monkey2 = this.challengers[1].id;
     const random = Math.random();
     const winner = random < 0.5 ? monkey1 : monkey2;
     const loser = winner === monkey1 ? monkey2 : monkey1;
@@ -92,7 +95,7 @@ export class CodeMonkeyClubComponent implements OnInit {
       },
       {
         round: 2,
-        text: `Round 2: Monkey ${loser} got hit by BadException...`,
+        text: `Round 2: Monkey ${loser} gets a bad exception...`,
       },
       {
         round: 3,
