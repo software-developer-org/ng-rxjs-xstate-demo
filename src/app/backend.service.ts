@@ -64,7 +64,7 @@ export class BackendService {
   }
 
   addNewClub(): void {
-    const id = this.clubs.length + 1;
+    const id = this.clubs.length;
     this.clubs.push(
       new Entity(id, 'Yet another Code Monkey Club ' + id, [
         'Lorem ipsum dolor sit',
