@@ -31,7 +31,7 @@ export class BackendService {
   members: Entity[] = [];
 
   constructor(private statusService: StatusService) {
-    new Array(6)
+    new Array(7)
       .fill('')
       .forEach((_, index) =>
         this.clubs.push(
@@ -95,10 +95,12 @@ export class BackendService {
       setTimeout(() => {
         this.statusService.addMessage(getTime(), `Response GET /club/${clubId}/rulez`);
         subscriber.next(
-          new Entity(clubId, 'Club Rulez' + clubId, [
+          new Entity(clubId, 'Club Rulez ' + clubId, [
             '#1 You do not talk about CODE MONKEY CLUB.',
             '#2 You DO NOT talk about CODE MONKEY CLUB.',
-            '...',
+            '#3 If a PO says "stop" or goes limp, taps out the project is over.',
+            '#4 Only two guys for pair programming.',
+            '#5 Focus on one project at a coding session.',
             '#6 No shirts, no shoes. (Only if remote and hot)',
             '#7 Coding sessions will go on as long as they have to.',
             '#8 If this is your first project at CODE MONKEY CLUB, you HAVE to code.',

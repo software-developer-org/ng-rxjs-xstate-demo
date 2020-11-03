@@ -9,23 +9,6 @@
 
 <h3 fxLayout="row" fxLayoutAlign="center center">Welcome Consume Monkeys!</h3>
 
-<div>
-  <mat-card class="rulez-card">
-    <mat-card-title>
-      {{ club ? club.name : "loading club details" }}
-    </mat-card-title>
-
-    <mat-card-content>
-      <div>
-        {{ rulez ? rulez.name : "loading club rulez" }}
-      </div>
-      <div *ngIf="rulez">
-        <div *ngFor="let rule of rulez.description">{{ rule }}</div>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div>
-
 <div fxLayout="row wrap">
   <div fxFlex="30" fxLayoutAlign="center center">
     {{ (challengers.length >= 1 ? challengers[0].name : "") + " >>>" }}
@@ -44,12 +27,29 @@
   </div>
 </div>
 
-<div fxLayout="row wrap">
-  <app-entity-card
-    *ngFor="let member of members"
-    [entity]="member"
-    (click)="enterChallenger(member)"
-    [class.challenger]="isChallenger(member.id)"
-  >
-  </app-entity-card>
+<div class="scroll">
+  <mat-expansion-panel hideToggle>
+    <!-- #enddocregion hide-toggle -->
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ club ? club.name : "loading club details" }}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{ rulez ? rulez.name : "loading club rulez" }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div *ngIf="rulez">
+      <div *ngFor="let rule of rulez.description">{{ rule }}</div>
+    </div>
+  </mat-expansion-panel>
+
+  <div fxLayout="row wrap" fxLayoutAlign="center center">
+    <app-entity-card
+      *ngFor="let member of members"
+      [entity]="member"
+      (click)="enterChallenger(member)"
+      [class.challenger]="isChallenger(member.id)"
+    >
+    </app-entity-card>
+  </div>
 </div>
