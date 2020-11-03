@@ -24,13 +24,13 @@ export class CodeMonkeyClubsComponent implements OnInit {
         setTimeout(() => {
           console.log(getTime(), 'entering code monkey club', club.id);
           this.clubs.push(club);
-          if (clubs.length === index + 1) {
-            this.spinner.hide();
-          }
+          // if (clubs.length === index + 1) {
+          //   this.spinner.hide();
+          // }
         }, index * 500 + 500);
       });
     });
-    this.spinner.show();
+    // this.spinner.show();
   }
 
   loadAdditionalData(): void {
