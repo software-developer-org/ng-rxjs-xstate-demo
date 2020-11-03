@@ -30,7 +30,7 @@ export class BackendService {
   members: Entity[] = [];
 
   constructor() {
-    new Array(3)
+    new Array(6)
       .fill('')
       .forEach((_, index) =>
         this.clubs.push(
