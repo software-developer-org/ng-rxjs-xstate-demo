@@ -1,9 +1,27 @@
-<nav>
-    <a routerLink="/code-monkey-club" routerLinkActive="active">Code Monkey Clubs</a>
-</nav>
+<div fxLayout="row wrap">
+  <a
+    class="header"
+    fxFlex="grow"
+    fxLayoutAlign="center center"
+    routerLink="/code-monkey-club"
+    routerLinkActive="active"
+    >Ng RxJS and XState Demo</a
+  >
 
-<h2 fxLayout="row" fxLayoutAlign="center center">Ng RxJS Demo</h2>
+  <div fxFlex="grow" class="main">
+    <div fxLayout="row wrap">
+      <div fxFlex="20%"></div>
 
-<router-outlet></router-outlet>
+      <div fxFlex="60%">
+        <div class="main">
+          <router-outlet></router-outlet>
+        </div>
+        <div class="footer">
+          <app-status-bar></app-status-bar>
+        </div>
+      </div>
 
-<app-status-bar></app-status-bar>
+      <div fxFlex="20%"></div>
+    </div>
+  </div>
+</div>
