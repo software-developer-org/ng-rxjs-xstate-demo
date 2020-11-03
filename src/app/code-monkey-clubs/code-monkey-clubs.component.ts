@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BackendService, Entity, getTime } from '../backend.service';
+import { StatusService } from '../status.service';
 
 @Component({
   selector: 'app-code-monkey-clubs',
@@ -11,7 +12,7 @@ export class CodeMonkeyClubsComponent implements OnInit {
 
   clubs: Entity[];
 
-  constructor(private backendService: BackendService, private spinner: NgxSpinnerService) { }
+  constructor(private backendService: BackendService, private statusService: StatusService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -22,7 +23,7 @@ export class CodeMonkeyClubsComponent implements OnInit {
       this.clubs = [];
       clubs.forEach((club, index) => {
         setTimeout(() => {
-          console.log(getTime(), 'entering code monkey club', club.id);
+          this.statusService.addMessage(getTime(), 'entering code monkey club', club.id);
           this.clubs.push(club);
           // if (clubs.length === index + 1) {
           //   this.spinner.hide();

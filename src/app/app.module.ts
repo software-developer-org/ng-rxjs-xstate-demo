@@ -11,13 +11,15 @@ import { AppComponent } from './app.component';
 import { CodeMonkeyClubComponent } from './code-monkey-club/code-monkey-club.component';
 import { CodeMonkeyClubsComponent } from './code-monkey-clubs/code-monkey-clubs.component';
 import { EntityCardComponent } from './entity-card/entity-card.component';
+import { StatusBarComponent } from './status-bar/status-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EntityCardComponent,
     CodeMonkeyClubsComponent,
-    CodeMonkeyClubComponent
+    CodeMonkeyClubComponent,
+    StatusBarComponent
   ],
   imports: [
     CommonModule,

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { StatusService } from './status.service';
 
 export class Entity {
   constructor(
@@ -29,7 +30,7 @@ export class BackendService {
   clubs: Entity[] = [];
   members: Entity[] = [];
 
-  constructor() {
+  constructor(private statusService: StatusService) {
     new Array(6)
       .fill('')
       .forEach((_, index) =>
@@ -52,10 +53,10 @@ export class BackendService {
   }
 
   getClubs(): Observable<Entity[]> {
-    console.log(getTime(), 'Request GET /clubs');
+    this.statusService.addMessage(getTime(), 'Request GET /clubs');
     const obs$ = new Observable<Entity[]>((subscriber) => {
       setTimeout(() => {
-        console.log(getTime(), 'Response GET /clubs');
+        this.statusService.addMessage(getTime(), 'Response GET /clubs');
         subscriber.next(this.clubs);
         subscriber.complete();
       }, 1000);
@@ -76,10 +77,10 @@ export class BackendService {
   }
 
   getClubById(id: number): Observable<Entity> {
-    console.log(getTime(), `Request GET /club/${id}`);
+    this.statusService.addMessage(getTime(), `Request GET /club/${id}`);
     const obs$ = new Observable<Entity>((subscriber) => {
       setTimeout(() => {
-        console.log(getTime(), `Response GET /clubs/${id}`);
+        this.statusService.addMessage(getTime(), `Response GET /clubs/${id}`);
         const entity = this.clubs.find((e) => e.id === id);
         subscriber.next(entity);
         subscriber.complete();
@@ -90,9 +91,9 @@ export class BackendService {
 
   getClubRulez(clubId: number): Observable<Entity> {
     const obs$ = new Observable<Entity>((subscriber) => {
-      console.log(getTime(), `Request GET /club/${clubId}/rulez`);
+      this.statusService.addMessage(getTime(), `Request GET /club/${clubId}/rulez`);
       setTimeout(() => {
-        console.log(getTime(), `Response GET /club/${clubId}/rulez`);
+        this.statusService.addMessage(getTime(), `Response GET /club/${clubId}/rulez`);
         subscriber.next(
           new Entity(clubId, 'Club Rulez' + clubId, [
             '#1 You do not talk about CODE MONKEY CLUB.',
@@ -111,9 +112,9 @@ export class BackendService {
 
   getMembers(): Observable<Entity[]> {
     const obs$ = new Observable<Entity[]>((subscriber) => {
-      console.log(getTime(), `Request GET /members`);
+      this.statusService.addMessage(getTime(), `Request GET /members`);
       setTimeout(() => {
-        console.log(getTime(), `Response GET /members`);
+        this.statusService.addMessage(getTime(), `Response GET /members`);
         subscriber.next(this.members);
         subscriber.complete();
       }, 200);

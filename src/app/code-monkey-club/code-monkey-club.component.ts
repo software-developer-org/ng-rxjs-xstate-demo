@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { from } from 'rxjs';
 import { BackendService, Entity } from '../backend.service';
+import { StatusService } from '../status.service';
 
 @Component({
   selector: 'app-code-monkey-club',
@@ -20,11 +21,10 @@ export class CodeMonkeyClubComponent implements OnInit {
    */
   challengers: Entity[] = [];
 
-  boxring = ``;
-
   constructor(
     private route: ActivatedRoute,
     private backendService: BackendService,
+    private statusService: StatusService,
     private spinner: NgxSpinnerService
   ) {}
 
@@ -49,7 +49,7 @@ export class CodeMonkeyClubComponent implements OnInit {
       this.members = [];
       members.forEach((member, index) => {
         setTimeout(() => {
-          console.log('introducting member', member.id);
+          this.statusService.addMessage('introducting member', member.id);
           this.members.push(member);
           if (members.length === index + 1) {
             this.membersLoaded = true;
@@ -67,7 +67,7 @@ export class CodeMonkeyClubComponent implements OnInit {
     const leaveChallenger = this.challengers.find((s) => s.id === member.id);
     if (leaveChallenger) {
       this.challengers = this.challengers.filter((s) => s.id !== member.id);
-      console.log('challenger leaving', member.id);
+      this.statusService.addMessage('challenger leaving', member.id);
       return;
     }
 
@@ -75,7 +75,7 @@ export class CodeMonkeyClubComponent implements OnInit {
       return;
     }
 
-    console.log('challenger entered', member.id);
+    this.statusService.addMessage('challenger entered', member.id);
     this.challengers.push(member);
   }
 
@@ -90,7 +90,7 @@ export class CodeMonkeyClubComponent implements OnInit {
     const random = Math.random();
     const winner = random < 0.5 ? monkey1 : monkey2;
     const loser = winner === monkey1 ? monkey2 : monkey1;
-    this.boxring = `Code monkey ${monkey1} and ${monkey2} starts coding heavily...`;
+    this.statusService.addMessage(`Code monkey ${monkey1} and ${monkey2} starts coding heavily...`);
 
     const rounds = [
       {
@@ -109,9 +109,7 @@ export class CodeMonkeyClubComponent implements OnInit {
 
     from(rounds).subscribe((round) => {
       setTimeout(() => {
-        console.log(round.text);
-        this.boxring += `
-${round.text}`;
+        this.statusService.addMessage(round.text);
       }, round.round * 1000);
     });
   }
