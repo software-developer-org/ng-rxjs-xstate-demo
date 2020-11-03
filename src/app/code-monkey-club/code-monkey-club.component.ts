@@ -13,6 +13,7 @@ export class CodeMonkeyClubComponent implements OnInit {
   club: Entity;
   rulez: Entity;
   members: Entity[];
+  membersLoaded = false;
 
   /**
    * Two coders required for a challenge
@@ -51,15 +52,18 @@ export class CodeMonkeyClubComponent implements OnInit {
           console.log('introducting member', member.id);
           this.members.push(member);
           if (members.length === index + 1) {
-            this.spinner.hide();
+            this.membersLoaded = true;
           }
         }, index * 200 + 200);
       });
     });
-    this.spinner.show();
   }
 
   enterChallenger(member: Entity): void {
+    // only when all members are loaded a code challenge may start
+    if (!this.membersLoaded) {
+      return;
+    }
     const leaveChallenger = this.challengers.find((s) => s.id === member.id);
     if (leaveChallenger) {
       this.challengers = this.challengers.filter((s) => s.id !== member.id);
