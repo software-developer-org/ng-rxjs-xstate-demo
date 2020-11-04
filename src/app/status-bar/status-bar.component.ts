@@ -25,6 +25,6 @@ export class StatusBarComponent implements OnInit {
     setTimeout(() => {
       const textarea = document.getElementById('status-bar');
       textarea.scrollTop = textarea.scrollHeight;
-    }, 500);
+    }, 50);
   }
 }
