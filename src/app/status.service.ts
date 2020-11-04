@@ -3,15 +3,14 @@ import { Observable, Subject } from 'rxjs';
 import { getTime } from './utils';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StatusService {
-
   private messages = '';
 
   private messages$ = new Subject<string>();
 
-  constructor() { }
+  constructor() {}
 
   addMessage(source: string, ...args: any[]): void {
     let prefix = getTime() + ' ' + source;
@@ -23,7 +22,7 @@ export class StatusService {
     const message = args.reduce((last, current) => {
       // get stack trace in case of error
       const stringVal = current?.stack ? current.stack : current;
-      return  last + ' ' + stringVal;
+      return last + ' ' + stringVal;
     }, ':');
     this.messages += `
 ${prefix}${message}`;
