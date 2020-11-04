@@ -131,6 +131,38 @@ A sample UML class and sequence diagram for the Iterator design pattern.
   - … provide many values
   - … allows chaining/piping of operations
 
+# Demo application
+
+This app introduces you to all the Code Monkeys in the world. The app shows you:
+
+- A network of all Code Monkey clubs.
+- New clubs are incubating in various places and countries.
+- Each club holds a number of loosely connected members.
+- Each member follows strictly the Code Monkey rulez.
+
+There are two views: Network View of Code Monkey Clubs and Detail View of a Code Monkey Club
+
+## Network View of Code Monkey Clubs
+
+![](./Network_View.PNG)
+
+## Detail View of a Code Monkey Club
+
+![](./Club_View.PNG)
+
+## Status Bar
+
+![](./Status-Bar.PNG)
+
+All actions like code fights or backend calls are logged into a status bar as shown in the footer.
+
+# RxJS in Action - Demo
+
+
+
+## Status Bar
+
+
 # XState
 
 Simplifying UI-Workflows by modelling finite state machines. In software design a UI workflow is described in linear transitions and all possible results. Doing the same in software development 'as-is' is horror and leads to complex implementations. Using FSMs (https://en.wikipedia.org/wiki/Finite-state_machine), in defining states and inputs, make code way simpler and easier to maintain.
