@@ -49,7 +49,7 @@ export class CodeMonkeyClubComponent implements OnInit {
       this.members = [];
       members.forEach((member, index) => {
         setTimeout(() => {
-          this.statusService.addMessage('introducting member', member.id);
+          this.statusService.addMessage('CodeMonkeyClubComponent', 'introducting member', member.id);
           this.members.push(member);
           if (members.length === index + 1) {
             this.membersLoaded = true;
@@ -67,7 +67,7 @@ export class CodeMonkeyClubComponent implements OnInit {
     const leaveChallenger = this.challengers.find((s) => s.id === member.id);
     if (leaveChallenger) {
       this.challengers = this.challengers.filter((s) => s.id !== member.id);
-      this.statusService.addMessage('challenger leaving', member.id);
+      this.statusService.addMessage('CodeMonkeyClubComponent', 'challenger leaving', member.id);
       return;
     }
 
@@ -75,7 +75,7 @@ export class CodeMonkeyClubComponent implements OnInit {
       return;
     }
 
-    this.statusService.addMessage('challenger entered', member.id);
+    this.statusService.addMessage('CodeMonkeyClubComponent', 'challenger entered', member.id);
     this.challengers.push(member);
   }
 
@@ -90,7 +90,7 @@ export class CodeMonkeyClubComponent implements OnInit {
     const random = Math.random();
     const winner = random < 0.5 ? monkey1 : monkey2;
     const loser = winner === monkey1 ? monkey2 : monkey1;
-    this.statusService.addMessage(`Code monkey ${monkey1} and ${monkey2} starts coding heavily...`);
+    this.statusService.addMessage('CodeMonkeyClubComponent', `Code monkey ${monkey1} and ${monkey2} starts coding heavily...`);
 
     const rounds = [
       {
@@ -109,7 +109,7 @@ export class CodeMonkeyClubComponent implements OnInit {
 
     from(rounds).subscribe((round) => {
       setTimeout(() => {
-        this.statusService.addMessage(round.text);
+        this.statusService.addMessage('CodeMonkeyClubComponent', round.text);
       }, round.round * 1000);
     });
   }

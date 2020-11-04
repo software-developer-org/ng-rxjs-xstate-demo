@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { getTime } from './utils';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,16 @@ export class StatusService {
 
   constructor() { }
 
-  addMessage(...args: any[]): void {
-    const message = args.reduce((last, current) => last + ' ' + current, '');
+  addMessage(source: string, ...args: any[]): void {
+    let prefix = getTime() + ' ' + source;
+    while (prefix.length < 40) {
+      prefix += ' ';
+    }
+
     // adds a message in a new line
+    const message = args.reduce((last, current) => last + ' ' + current, ':');
     this.messages += `
-${message}`;
+${prefix}${message}`;
     this.messages$.next(this.messages);
   }
 
