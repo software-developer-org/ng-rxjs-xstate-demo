@@ -10,7 +10,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CodeMonkeyClubComponent } from './code-monkey-club/code-monkey-club.component';
-import { CodeMonkeyClubsComponent } from './code-monkey-clubs/code-monkey-clubs.component';
+import { CodeMonkeyNetworkComponent } from './code-monkey-network/code-monkey-network.component';
 import { EntityCardComponent } from './entity-card/entity-card.component';
 import { StatusBarComponent } from './status-bar/status-bar.component';
 
@@ -18,7 +18,7 @@ import { StatusBarComponent } from './status-bar/status-bar.component';
   declarations: [
     AppComponent,
     EntityCardComponent,
-    CodeMonkeyClubsComponent,
+    CodeMonkeyNetworkComponent,
     CodeMonkeyClubComponent,
     StatusBarComponent
   ],

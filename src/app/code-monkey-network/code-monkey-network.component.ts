@@ -5,10 +5,10 @@ import { StatusService } from '../status.service';
 
 @Component({
   selector: 'app-code-monkey-clubs',
-  templateUrl: './code-monkey-clubs.component.html',
-  styleUrls: ['./code-monkey-clubs.component.scss']
+  templateUrl: './code-monkey-network.component.html',
+  styleUrls: ['./code-monkey-network.component.scss']
 })
-export class CodeMonkeyClubsComponent implements OnInit {
+export class CodeMonkeyNetworkComponent implements OnInit {
 
   clubs: Entity[];
 
@@ -23,7 +23,7 @@ export class CodeMonkeyClubsComponent implements OnInit {
       this.clubs = [];
       clubs.forEach((club, index) => {
         setTimeout(() => {
-          this.statusService.addMessage('CodeMonkeyClubsComponent', 'entering code monkey club', club.id);
+          this.statusService.addMessage('CodeMonkeyNetworkComponent', 'entering code monkey club', club.id);
           this.clubs.push(club);
           // if (clubs.length === index + 1) {
           //   this.spinner.hide();
