@@ -65,13 +65,13 @@ A [Subject](https://rxjs.dev/guide/subject) is a special type of Observable allo
 ``` typescript
   // variables representing streams, values are handled via streams
   // a stream in RxJS is represented by an Observable
-  const a$: Subject<number> = new Subject<number>(); // [RxJS - Subject](https://rxjs.dev/guide/subject)
+  const a$: Subject<number> = new Subject<number>();
   // Subject is a special type of Observable allowing multicast to many Observers (=subscribers)
   const b$: Subject<number> = new Subject<number>();
 
   // combine both streams a$ and b$ to one stream
   const ab$: Observable<number[]> = combineLatest([a$, b$]);
-  const sum$ = ab$
+  const sum$: Observable<number> = ab$
     // a pipe allows chaining
     .pipe(
       // map operator
@@ -79,9 +79,12 @@ A [Subject](https://rxjs.dev/guide/subject) is a special type of Observable allo
     );
 
   sum$.subscribe((total) => console.log('sum from stream', total)); // subscribe on streams a$ and b$
-  a$.next(1);
-  b$.next(2);
-  a$.next(2);
+  a$.next(1); // pass value to a$ stream, ab$ stream is not notified yet
+
+  // ab$ gets notified in case all observables has at least one value casted
+  b$.next(2); // ab$: [1,2] => 3 is logged
+  a$.next(2); // ab$: [2,2] => 4 is logged
+  b$.next(3); // ab$: [2,3] => 5 is logged
 ```
 
 ## What is RxJS?
