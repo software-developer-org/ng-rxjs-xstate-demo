@@ -20,7 +20,11 @@ export class StatusService {
     }
 
     // adds a message in a new line
-    const message = args.reduce((last, current) => last + ' ' + current, ':');
+    const message = args.reduce((last, current) => {
+      // get stack trace in case of error
+      const stringVal = current?.stack ? current.stack : current;
+      return  last + ' ' + stringVal;
+    }, ':');
     this.messages += `
 ${prefix}${message}`;
     this.messages$.next(this.messages);

@@ -42,11 +42,19 @@ export class BackendService {
   getClubs(): Observable<Entity[]> {
     this.statusService.addMessage('BackendService', 'Request GET /clubs');
     const obs$ = new Observable<Entity[]>((subscriber) => {
-      setTimeout(() => {
-        this.statusService.addMessage('BackendService', 'Response GET /clubs');
-        subscriber.next(this.clubs);
-        subscriber.complete();
-      }, 1000);
+      // simulate server error
+      if (this.clubs.length === 9) {
+        subscriber.error(new Error('Response GET /clubs: Bad Exception'));
+      } else {
+        setTimeout(() => {
+          this.statusService.addMessage(
+            'BackendService',
+            'Response GET /clubs'
+          );
+          subscriber.next(this.clubs);
+          subscriber.complete();
+        }, 1000);
+      }
     });
     return obs$;
   }
@@ -67,7 +75,10 @@ export class BackendService {
     this.statusService.addMessage('BackendService', `Request GET /club/${id}`);
     const obs$ = new Observable<Entity>((subscriber) => {
       setTimeout(() => {
-        this.statusService.addMessage('BackendService', `Response GET /clubs/${id}`);
+        this.statusService.addMessage(
+          'BackendService',
+          `Response GET /clubs/${id}`
+        );
         const entity = this.clubs.find((e) => e.id === id);
         subscriber.next(entity);
         subscriber.complete();
@@ -78,9 +89,15 @@ export class BackendService {
 
   getClubRulez(clubId: number): Observable<Entity> {
     const obs$ = new Observable<Entity>((subscriber) => {
-      this.statusService.addMessage('BackendService', `Request GET /club/${clubId}/rulez`);
+      this.statusService.addMessage(
+        'BackendService',
+        `Request GET /club/${clubId}/rulez`
+      );
       setTimeout(() => {
-        this.statusService.addMessage('BackendService', `Response GET /club/${clubId}/rulez`);
+        this.statusService.addMessage(
+          'BackendService',
+          `Response GET /club/${clubId}/rulez`
+        );
         subscriber.next(
           new Entity(clubId, 'Club Rulez ' + clubId, [
             '#1 You do not talk about CODE MONKEY CLUB.',
@@ -103,7 +120,10 @@ export class BackendService {
     const obs$ = new Observable<Entity[]>((subscriber) => {
       this.statusService.addMessage('BackendService', `Request GET /members`);
       setTimeout(() => {
-        this.statusService.addMessage('BackendService', `Response GET /members`);
+        this.statusService.addMessage(
+          'BackendService',
+          `Response GET /members`
+        );
         subscriber.next(this.members);
         subscriber.complete();
       }, 200);

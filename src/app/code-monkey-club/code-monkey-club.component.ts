@@ -35,28 +35,41 @@ export class CodeMonkeyClubComponent implements OnInit {
   loadData(): void {
     // get club details
     const id = Number.parseInt(this.route.snapshot.paramMap.get('id'), 10);
-    this.backendService.getClubById(id).subscribe((club) => {
-      this.club = club;
-    });
+    this.backendService.getClubById(id).subscribe(
+      (club) => {
+        this.club = club;
+      },
+      (error) => this.statusService.addMessage('CodeMonkeyClubComponent', error)
+    );
 
     // get rulez
-    this.backendService.getClubRulez(id).subscribe((rulez) => {
-      this.rulez = rulez;
-    });
+    this.backendService.getClubRulez(id).subscribe(
+      (rulez) => {
+        this.rulez = rulez;
+      },
+      (error) => this.statusService.addMessage('CodeMonkeyClubComponent', error)
+    );
 
     // get members
-    this.backendService.getMembers().subscribe((members) => {
-      this.members = [];
-      members.forEach((member, index) => {
-        setTimeout(() => {
-          this.statusService.addMessage('CodeMonkeyClubComponent', 'introducting member', member.id);
-          this.members.push(member);
-          if (members.length === index + 1) {
-            this.membersLoaded = true;
-          }
-        }, index * 200 + 200);
-      });
-    });
+    this.backendService.getMembers().subscribe(
+      (members) => {
+        this.members = [];
+        members.forEach((member, index) => {
+          setTimeout(() => {
+            this.statusService.addMessage(
+              'CodeMonkeyClubComponent',
+              'introducting member',
+              member.id
+            );
+            this.members.push(member);
+            if (members.length === index + 1) {
+              this.membersLoaded = true;
+            }
+          }, index * 200 + 200);
+        });
+      },
+      (error) => this.statusService.addMessage('CodeMonkeyClubComponent', error)
+    );
   }
 
   enterChallenger(member: Entity): void {
@@ -67,7 +80,11 @@ export class CodeMonkeyClubComponent implements OnInit {
     const leaveChallenger = this.challengers.find((s) => s.id === member.id);
     if (leaveChallenger) {
       this.challengers = this.challengers.filter((s) => s.id !== member.id);
-      this.statusService.addMessage('CodeMonkeyClubComponent', 'challenger leaving', member.id);
+      this.statusService.addMessage(
+        'CodeMonkeyClubComponent',
+        'challenger leaving',
+        member.id
+      );
       return;
     }
 
@@ -75,7 +92,11 @@ export class CodeMonkeyClubComponent implements OnInit {
       return;
     }
 
-    this.statusService.addMessage('CodeMonkeyClubComponent', 'challenger entered', member.id);
+    this.statusService.addMessage(
+      'CodeMonkeyClubComponent',
+      'challenger entered',
+      member.id
+    );
     this.challengers.push(member);
   }
 
@@ -90,7 +111,10 @@ export class CodeMonkeyClubComponent implements OnInit {
     const random = Math.random();
     const winner = random < 0.5 ? monkey1 : monkey2;
     const loser = winner === monkey1 ? monkey2 : monkey1;
-    this.statusService.addMessage('CodeMonkeyClubComponent', `Code monkey ${monkey1} and ${monkey2} starts coding heavily...`);
+    this.statusService.addMessage(
+      'CodeMonkeyClubComponent',
+      `Code monkey ${monkey1} and ${monkey2} starts coding heavily...`
+    );
 
     const rounds = [
       {
