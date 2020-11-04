@@ -84,6 +84,50 @@ A [Subject](https://rxjs.dev/guide/subject) is a special type of Observable allo
   a$.next(2);
 ```
 
+## What is RxJS?
+
+> The Observer pattern done right
+>
+> ReactiveX is a combination of the best ideas from the [Observer pattern](https://en.wikipedia.org/wiki/Observer_pattern), the [Iterator pattern](https://en.wikipedia.org/wiki/Iterator_pattern), and [functional programming](http://martinfowler.com/articles/collection-pipeline/#NestedOperatorExpressions)
+
+-- source: [ReactiveX](http://reactivex.io)
+
+ReactiveX (Reactive Extensions) especially enhances reactive programming with possibilities to combine and transform streams using query-like operators.
+
+> RxJS is a library for composing asynchronous and event-based programs by using observable sequences. It provides one core type, the Observable, satellite types (Observer, Schedulers, Subjects) and operators inspired by Array#extras (map, filter, reduce, every, etc) to allow handling asynchronous events as collections.
+
+-- source: [RxJS - Introduction](https://rxjs.dev/guide/overview)
+
+RxJS is a JavaScript implementation of [ReactiveX (Reactive extensions)](http://reactivex.io).
+
+### Observer Pattern
+
+The [Observer pattern](https://en.wikipedia.org/wiki/Observer_pattern) is used for data streams and data propagation. An object, called Subject, maintaining a list dependents, called Observers, that gets notified.
+
+UML class diagram of Observer pattern.
+![UML class diagram of Observer pattern](https://upload.wikimedia.org/wikipedia/commons/a/a8/Observer_w_update.svg)
+
+A sample UML class and sequence diagram for the Observer design pattern.
+![A sample UML class and sequence diagram for the Observer design pattern.](https://upload.wikimedia.org/wikipedia/commons/0/01/W3sDesign_Observer_Design_Pattern_UML.jpg)
+
+### Iterator Pattern
+
+The [Iterator pattern](https://en.wikipedia.org/wiki/Iterator_pattern) loops through a stream of data (Iterable.next()) and may complete (Iterable.complete()) or may throw an error (Iterable.error()).
+
+UML class diagram of Iterator pattern.
+![UML class diagram of Iterator pattern](https://upload.wikimedia.org/wikipedia/commons/1/13/Iterator_UML_class_diagram.svg)
+
+A sample UML class and sequence diagram for the Iterator design pattern.
+![A sample UML class and sequence diagram for the Iterator design pattern.](https://upload.wikimedia.org/wikipedia/commons/c/c5/W3sDesign_Iterator_Design_Pattern_UML.jpg)
+
+### ReactiveX - Differences and What it is not
+
+- a paradigm that goes beyond the Observer pattern allowing to subscribe on, transform, combine data streams and even control the threading of the streams - [StackOverflow](https://stackoverflow.com/a/16652921).
+- an [Observable differs from a Promise](https://angular.io/guide/comparing-observables#observables-compared-to-promises), since it…
+  - … is declarative and starts on subscriptions
+  - … provide many values
+  - … allows chaining/piping of operations
+
 # XState
 
 Simplifying UI-Workflows by modelling finite state machines. In software design a UI workflow is described in linear transitions and all possible results. Doing the same in software development 'as-is' is horror and leads to complex implementations. Using FSMs (https://en.wikipedia.org/wiki/Finite-state_machine), in defining states and inputs, make code way simpler and easier to maintain.
