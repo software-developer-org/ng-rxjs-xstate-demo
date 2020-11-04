@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { StatusService } from '../status.service';
 
 @Component({
@@ -15,10 +15,9 @@ export class StatusBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.statusMessages = this.statusService.getMessages().pipe(
-      map((messages) => {
+      tap(() => {
         this.scrollToBottom();
-        return messages;
-      })
+      }),
     );
   }
 
