@@ -370,6 +370,75 @@ export class StatusBarComponent implements OnInit {
 }
 ```
 
+# RxJS Observable.unsubscribe() examples
+
+## Unsubscribe to Clean Up Resources: Avoid Memory Leaks and Side Effects
+
+Imagine there is a component listening to mouse down events:
+
+```typescript
+import { from, fromEvent } from 'rxjs';
+...
+export class CodeMonkeyClubComponent implements OnInit {
+  ...
+  ngOnInit(): void {
+    const id = Math.random();
+    fromEvent(document, 'mousedown').subscribe((event) =>
+      console.log(id, ': Do something on MouseDown ', Math.random())
+    );
+    ...
+  }
+  ...
+}
+```
+
+The result would be something like this when a user triggers 3 times a mouse down event:
+
+```log
+0.9938084620538779 ": Do something on MouseDown " 0.005569280694061041
+0.9938084620538779 ": Do something on MouseDown " 0.7817118424445497
+0.9938084620538779 ": Do something on MouseDown " 0.060648653169596445
+```
+
+Another result is when a user leaves and re-enters this component and it triggers 3 times a mouse down event:
+
+```log
+0.9938084620538779 ": Do something on MouseDown " 0.23735551079882278
+0.8620868116145006 ": Do something on MouseDown " 0.7611125869058986
+0.9938084620538779 ": Do something on MouseDown " 0.906273375314228
+0.8620868116145006 ": Do something on MouseDown " 0.02662434244303835
+0.9938084620538779 ": Do something on MouseDown " 0.16487297643511
+0.8620868116145006 ": Do something on MouseDown " 0.9333783099795039
+```
+
+What you see here is that there are 6 instead of 3 log entries. The reason is the previous observable is still in memory and hence not been cleanup.
+
+This can be solved by unsubscribing a Subscription:
+
+```typescript
+import { from, fromEvent, Subscription } from 'rxjs';
+...
+export class CodeMonkeyClubComponent implements OnInit, OnDestroy {
+  ...
+  mouseDownSubscription: Subscription;
+
+  ngOnInit(): void {
+    const id = Math.random();
+    this.mouseDownSubscription = fromEvent(document, 'mousedown').subscribe((event) =>
+      console.log(id, ': Do something on MouseDown ', Math.random())
+    );
+    this.loadData();
+  }
+
+  ngOnDestroy(): void {
+    if (this.mouseDownSubscription) {
+      this.mouseDownSubscription.unsubscribe();
+    }
+  }
+  ...
+}
+```
+
 # XState
 
 Simplifying UI-Workflows by modelling finite state machines. In software design a UI workflow is described in linear transitions and all possible results. Doing the same in software development 'as-is' is horror and leads to complex implementations. Using FSMs (https://en.wikipedia.org/wiki/Finite-state_machine), in defining states and inputs, make code way simpler and easier to maintain.

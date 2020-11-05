@@ -1,4 +1,4 @@
-import { combineLatest, Observable, Subject } from 'rxjs';
+import { combineLatest, fromEvent, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export function imperativeProgramming(): void {
@@ -65,4 +65,8 @@ export function subjectForMulticast(): void {
   obs$.subscribe((value) => console.log('Subject: subscriber 1:', value)); // Subject: subscriber 1: 0.514955660934378
   obs$.subscribe((value) => console.log('Subject: subscriber 2:', value)); // Subject: subscriber 2: 0.514955660934378
   obs$.next(Math.random());
+}
+
+export function getMouseDownEvents(): Observable<Event> {
+  return fromEvent(document, 'mousedown');
 }
