@@ -82,7 +82,7 @@ export class BackendService {
         const entity = this.clubs.find((e) => e.id === id);
         subscriber.next(entity);
         subscriber.complete();
-      }, 500);
+      }, 2000);
     });
     return obs$;
   }
@@ -111,7 +111,7 @@ export class BackendService {
           ])
         );
         subscriber.complete();
-      }, 1500);
+      }, 2100);
     });
     return obs$;
   }
@@ -126,7 +126,7 @@ export class BackendService {
         );
         subscriber.next(this.members);
         subscriber.complete();
-      }, 200);
+      }, 2200);
     });
     return obs$;
   }
