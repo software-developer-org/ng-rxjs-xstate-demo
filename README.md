@@ -154,14 +154,184 @@ There are two views: Network View of Code Monkey Clubs and Detail View of a Code
 
 ![](./Status-Bar.PNG)
 
-All actions like code fights or backend calls are logged into a status bar as shown in the footer.
+All actions like code fights or backend calls are logging into a status bar shown in the footer.
 
-# RxJS in Action - Demo
+The following sections provide RxJS and XState examples in this demo app.
 
+# RxJS log service example: Sharing Data through Streams
 
+One common usage is sharing data between components. Especially data changing constantly through time are perfect candidates for using streams.
 
-## Status Bar
+RxJS' [Subject](https://rxjs.dev/guide/subject) is special type of an [Observable](https://rxjs.dev/guide/observable):
 
+- Sending data: [Subject.next(value?: T)](https://rxjs.dev/api/index/class/Subject#next-) allows a component to send data.
+- Receiving data: [Object.subscribe()](https://rxjs.dev/api/index/class/Observable#subscribe-) allows a component to receive data.
+
+### Log Service
+Here is a log service allowing a producer (component) sending and a consumer (component) receiving logs:
+
+```typescript
+export class LogService {
+  ...
+  private logs$ = new Subject<string>();
+  ...
+  log(source: string, ...args: any[]): void {
+    ...
+    // concat arguments into one log message
+    const logMessage = args.reduce((last, current) => {
+      ...
+    }, ':');
+    ...
+    // multicast logs to Subject
+    this.logs$.next(this.logs);
+  }
+
+  getLogs(): Observable<string> {
+    return this.logs$;
+  }
+}
+```
+
+### Producers: CodeMonkeyNetworkComponent and CodeMonkeyClubComponent
+
+The network and code monkey components are sending logs:
+
+```typescript
+export class CodeMonkeyNetworkComponent implements OnInit {
+  ...
+  loadData(): void {
+    this.backendService.getClubs().subscribe(
+      // next data subscriber
+      (clubs) => {
+        this.clubs = [];
+        clubs.forEach((club, index) => {
+          setTimeout(() => {
+            // log incoming data
+            this.logService.log(
+              'CodeMonkeyNetworkComponent',
+              'Adding to network: ',
+              club.id
+            );
+            this.clubs.push(club);
+          }, index * 500 + 500);
+        });
+      },
+      // error subscriber
+      (error) => {
+        // log incoming error
+        this.logService.log('CodeMonkeyClubComponent', error);
+      }
+    );
+  }
+  ...
+}
+```
+
+```typescript
+export class CodeMonkeyClubComponent implements OnInit {
+  ...
+  loadData(): void {
+    // get club details
+    const id = Number.parseInt(this.route.snapshot.paramMap.get('id'), 10);
+    this.backendService.getClubById(id).subscribe(
+      // next data subscriber
+      (club) => {
+        // log incoming data
+        this.logService.log(
+          'CodeMonkeyClubComponent',
+          'showing details for code monkey club',
+          club.id
+        );
+        this.club = club;
+      },
+      // error subscriber
+      (error) => {
+        // log incoming error
+        this.logService.log('CodeMonkeyClubComponent', error);
+      }
+    );
+
+    // get rulez
+    this.backendService.getClubRulez(id).subscribe(
+      ...
+    );
+
+    // get members
+    this.backendService.getMembers().subscribe(
+      ...
+    );
+  }
+  ...
+}
+```
+
+### Consumer: StatusBarComponent
+
+The status bar component get a messages Observable (resp. Subject) from the log service:
+
+```typescript
+export class StatusBarComponent implements OnInit {
+  // NOTE: subscribe is done in template using async pipe
+  logs$: Observable<string>;
+
+  constructor(private logService: LogService) {}
+
+  ngOnInit(): void {
+    // get logs for displaying in status bar template
+    this.logs$ = this.logService.getLogs().pipe(
+      // tap: a pipe operator that 'peaks' for incoming data
+      // this is useful e.g. for side effects
+      tap(() => {
+        // auto scroll textarea to bottom
+        this.scrollToBottom();
+      }),
+    );
+  }
+
+  private scrollToBottom(): void {
+    setTimeout(() => {
+      const textarea = document.getElementById('status-bar');
+      textarea.scrollTop = textarea.scrollHeight;
+    }, 50);
+  }
+}
+```
+
+Please note that the component itself holds only the Observable but does not subscribe to it. This is done in the template:
+
+```html
+<!-- Subsribe logs$ using async -->
+<textarea id="status-bar" class="status-bar" fxFlex="grow">{{ logs$ | async}}</textarea>
+```
+
+Another way is subscribing the Observable instead of using async:
+
+```typescript
+export class StatusBarComponent implements OnInit {
+
+  logs: string;
+  ...
+  ngOnInit(): void {
+    // get logs for displaying in status bar template
+    this.logService.getLogs().pipe(
+      // tap: a pipe operator that 'peaks' for incoming data
+      // this is useful e.g. for side effects
+      tap(() => {
+        // auto scroll textarea to bottom
+        this.scrollToBottom();
+      }),
+    )
+    // subscribe and update logs
+    .subscribe(messages => this.statusMessages = messages);
+  }
+  ...
+}
+
+```
+
+```html
+<textarea id="status-bar" class="status-bar" fxFlex="grow">{{ logs }}</textarea>
+```
 
 # XState
 
