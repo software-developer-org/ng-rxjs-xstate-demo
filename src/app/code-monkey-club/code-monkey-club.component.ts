@@ -58,10 +58,7 @@ export class CodeMonkeyClubComponent implements OnInit {
       // next data subscriber
       (rulez) => {
         // log incoming data
-        this.logService.log(
-          'CodeMonkeyClubComponent',
-          'showing rulez'
-        );
+        this.logService.log('CodeMonkeyClubComponent', 'showing rulez');
         this.rulez = rulez;
       },
       // error subscriber
@@ -81,7 +78,9 @@ export class CodeMonkeyClubComponent implements OnInit {
             // log incoming data
             this.logService.log(
               'CodeMonkeyClubComponent',
-              'introducting member',
+              'code monkey club',
+              id,
+              ': member',
               member.id
             );
             this.members.push(member);
