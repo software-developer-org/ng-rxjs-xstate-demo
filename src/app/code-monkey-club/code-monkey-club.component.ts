@@ -36,26 +36,49 @@ export class CodeMonkeyClubComponent implements OnInit {
     // get club details
     const id = Number.parseInt(this.route.snapshot.paramMap.get('id'), 10);
     this.backendService.getClubById(id).subscribe(
+      // next data subscriber
       (club) => {
+        // log incoming data
+        this.statusService.sendMessage(
+          'CodeMonkeyClubComponent',
+          'showing details for code monkey club',
+          club.id
+        );
         this.club = club;
       },
-      (error) => this.statusService.sendMessage('CodeMonkeyClubComponent', error)
+      // error subscriber
+      (error) => {
+        // log incoming error
+        this.statusService.sendMessage('CodeMonkeyClubComponent', error);
+      }
     );
 
     // get rulez
     this.backendService.getClubRulez(id).subscribe(
+      // next data subscriber
       (rulez) => {
+        // log incoming data
+        this.statusService.sendMessage(
+          'CodeMonkeyClubComponent',
+          'showing rulez'
+        );
         this.rulez = rulez;
       },
-      (error) => this.statusService.sendMessage('CodeMonkeyClubComponent', error)
+      // error subscriber
+      (error) => {
+        // log incoming error
+        this.statusService.sendMessage('CodeMonkeyClubComponent', error);
+      }
     );
 
     // get members
     this.backendService.getMembers().subscribe(
+      // next data subscriber
       (members) => {
         this.members = [];
         members.forEach((member, index) => {
           setTimeout(() => {
+            // log incoming data
             this.statusService.sendMessage(
               'CodeMonkeyClubComponent',
               'introducting member',
@@ -68,7 +91,11 @@ export class CodeMonkeyClubComponent implements OnInit {
           }, index * 200 + 200);
         });
       },
-      (error) => this.statusService.sendMessage('CodeMonkeyClubComponent', error)
+      // error subscriber
+      (error) => {
+        // log incoming data
+        this.statusService.sendMessage('CodeMonkeyClubComponent', error);
+      }
     );
   }
 

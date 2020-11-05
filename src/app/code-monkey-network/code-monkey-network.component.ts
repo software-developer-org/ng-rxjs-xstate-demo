@@ -23,13 +23,15 @@ export class CodeMonkeyNetworkComponent implements OnInit {
 
   loadData(): void {
     this.backendService.getClubs().subscribe(
+      // next data subscriber
       (clubs) => {
         this.clubs = [];
         clubs.forEach((club, index) => {
           setTimeout(() => {
+            // log incoming data
             this.statusService.sendMessage(
               'CodeMonkeyNetworkComponent',
-              'entering code monkey club',
+              'Adding to network: ',
               club.id
             );
             this.clubs.push(club);
@@ -39,7 +41,11 @@ export class CodeMonkeyNetworkComponent implements OnInit {
           }, index * 500 + 500);
         });
       },
-      (error) => this.statusService.sendMessage('CodeMonkeyClubComponent', error)
+      // error subscriber
+      (error) => {
+        // log incoming error
+        this.statusService.sendMessage('CodeMonkeyClubComponent', error);
+      }
     );
     // this.spinner.show();
   }
