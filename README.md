@@ -297,14 +297,39 @@ export class StatusBarComponent implements OnInit {
 }
 ```
 
-Please note that the component itself holds only the Observable but does not subscribe to it. This is done in the template:
+# RxJS Observable.subscribe() example - Observables are Descriptive and not executed until subscribe() is called!
+
+An Observable is descriptive. This means it is not executed immediately. This happens when it [subscribe()](https://rxjs.dev/api/index/class/Observable#subscribe-) is called.
+
+## Status Bar example: Subscribing and Displaying logs
+
+The status bar component holds a logs$ Observable:
+
+```typescript
+export class StatusBarComponent implements OnInit {
+  // NOTE: subscribe is done in template using async pipe
+  logs$: Observable<string>;
+  ...
+  ngOnInit(): void {
+    // get logs for displaying in status bar template
+    this.logs$ = this.logService.getLogs().pipe(
+      ...
+    );
+  }
+  ...
+}
+```
+
+But how is it possible that the status bar template is showing logs though?
+
+In Angular there is an [AsyncPipe](https://angular.io/api/common/AsyncPipe) that can be used in an template. This pipe subscribes to an Observable and returns its data to the template:
 
 ```html
 <!-- Subsribe logs$ using async -->
 <textarea id="status-bar" class="status-bar" fxFlex="grow">{{ logs$ | async}}</textarea>
 ```
 
-Another way is subscribing the Observable instead of using async:
+Another way is directly subscribing an Observable in the component:
 
 ```typescript
 export class StatusBarComponent implements OnInit {
@@ -314,23 +339,35 @@ export class StatusBarComponent implements OnInit {
   ngOnInit(): void {
     // get logs for displaying in status bar template
     this.logService.getLogs().pipe(
-      // tap: a pipe operator that 'peaks' for incoming data
-      // this is useful e.g. for side effects
-      tap(() => {
-        // auto scroll textarea to bottom
-        this.scrollToBottom();
-      }),
+      ...
     )
     // subscribe and update logs
     .subscribe(messages => this.statusMessages = messages);
   }
   ...
 }
-
 ```
 
 ```html
 <textarea id="status-bar" class="status-bar" fxFlex="grow">{{ logs }}</textarea>
+```
+
+In case the component does not subscribe to it, the logs keeps empty (undefined):
+
+```typescript
+export class StatusBarComponent implements OnInit {
+
+  logs: string;
+  ...
+  ngOnInit(): void {
+    // get logs for displaying in status bar template
+    this.logService.getLogs().pipe(
+      ...
+    );
+    // NO subscribe() has been called, hence logs keeps undefined!!!
+  }
+  ...
+}
 ```
 
 # XState
