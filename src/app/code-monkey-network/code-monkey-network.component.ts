@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BackendService, Entity } from '../backend.service';
-import { StatusService } from '../status.service';
+import { LogService } from '../log.service';
 
 @Component({
   selector: 'app-code-monkey-clubs',
@@ -13,7 +13,7 @@ export class CodeMonkeyNetworkComponent implements OnInit {
 
   constructor(
     private backendService: BackendService,
-    private statusService: StatusService,
+    private logService: LogService,
     private spinner: NgxSpinnerService
   ) {}
 
@@ -29,7 +29,7 @@ export class CodeMonkeyNetworkComponent implements OnInit {
         clubs.forEach((club, index) => {
           setTimeout(() => {
             // log incoming data
-            this.statusService.sendMessage(
+            this.logService.log(
               'CodeMonkeyNetworkComponent',
               'Adding to network: ',
               club.id
@@ -44,7 +44,7 @@ export class CodeMonkeyNetworkComponent implements OnInit {
       // error subscriber
       (error) => {
         // log incoming error
-        this.statusService.sendMessage('CodeMonkeyClubComponent', error);
+        this.logService.log('CodeMonkeyClubComponent', error);
       }
     );
     // this.spinner.show();

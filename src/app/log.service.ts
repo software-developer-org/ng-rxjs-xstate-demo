@@ -5,31 +5,35 @@ import { getTime } from './utils';
 @Injectable({
   providedIn: 'root',
 })
-export class StatusService {
-  private messages = '';
+export class LogService {
+  private logs = '';
 
-  private messages$ = new Subject<string>();
+  private logs$ = new Subject<string>();
 
   constructor() {}
 
-  sendMessage(source: string, ...args: any[]): void {
+  log(source: string, ...args: any[]): void {
     let prefix = getTime() + ' ' + source;
     while (prefix.length < 40) {
       prefix += ' ';
     }
 
-    // adds a message in a new line
-    const message = args.reduce((last, current) => {
+    // concat arguments into one log message
+    const logMessage = args.reduce((last, current) => {
       // get stack trace in case of error
       const stringVal = current?.stack ? current.stack : current;
       return last + ' ' + stringVal;
     }, ':');
-    this.messages += `
-${prefix}${message}`;
-    this.messages$.next(this.messages);
+
+    // adds a log in a new line
+    this.logs += `
+${prefix}${logMessage}`;
+
+    // multicast logs to Subject
+    this.logs$.next(this.logs);
   }
 
-  getMessages(): Observable<string> {
-    return this.messages$;
+  getLogs(): Observable<string> {
+    return this.logs$;
   }
 }

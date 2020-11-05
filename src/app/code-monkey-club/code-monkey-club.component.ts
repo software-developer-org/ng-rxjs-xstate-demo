@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { from } from 'rxjs';
 import { BackendService, Entity } from '../backend.service';
-import { StatusService } from '../status.service';
+import { LogService } from '../log.service';
 
 @Component({
   selector: 'app-code-monkey-club',
@@ -24,7 +24,7 @@ export class CodeMonkeyClubComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private backendService: BackendService,
-    private statusService: StatusService,
+    private logService: LogService,
     private spinner: NgxSpinnerService
   ) {}
 
@@ -39,7 +39,7 @@ export class CodeMonkeyClubComponent implements OnInit {
       // next data subscriber
       (club) => {
         // log incoming data
-        this.statusService.sendMessage(
+        this.logService.log(
           'CodeMonkeyClubComponent',
           'showing details for code monkey club',
           club.id
@@ -49,7 +49,7 @@ export class CodeMonkeyClubComponent implements OnInit {
       // error subscriber
       (error) => {
         // log incoming error
-        this.statusService.sendMessage('CodeMonkeyClubComponent', error);
+        this.logService.log('CodeMonkeyClubComponent', error);
       }
     );
 
@@ -58,7 +58,7 @@ export class CodeMonkeyClubComponent implements OnInit {
       // next data subscriber
       (rulez) => {
         // log incoming data
-        this.statusService.sendMessage(
+        this.logService.log(
           'CodeMonkeyClubComponent',
           'showing rulez'
         );
@@ -67,7 +67,7 @@ export class CodeMonkeyClubComponent implements OnInit {
       // error subscriber
       (error) => {
         // log incoming error
-        this.statusService.sendMessage('CodeMonkeyClubComponent', error);
+        this.logService.log('CodeMonkeyClubComponent', error);
       }
     );
 
@@ -79,7 +79,7 @@ export class CodeMonkeyClubComponent implements OnInit {
         members.forEach((member, index) => {
           setTimeout(() => {
             // log incoming data
-            this.statusService.sendMessage(
+            this.logService.log(
               'CodeMonkeyClubComponent',
               'introducting member',
               member.id
@@ -94,7 +94,7 @@ export class CodeMonkeyClubComponent implements OnInit {
       // error subscriber
       (error) => {
         // log incoming data
-        this.statusService.sendMessage('CodeMonkeyClubComponent', error);
+        this.logService.log('CodeMonkeyClubComponent', error);
       }
     );
   }
@@ -107,7 +107,7 @@ export class CodeMonkeyClubComponent implements OnInit {
     const leaveChallenger = this.challengers.find((s) => s.id === member.id);
     if (leaveChallenger) {
       this.challengers = this.challengers.filter((s) => s.id !== member.id);
-      this.statusService.sendMessage(
+      this.logService.log(
         'CodeMonkeyClubComponent',
         'challenger leaving',
         member.id
@@ -119,7 +119,7 @@ export class CodeMonkeyClubComponent implements OnInit {
       return;
     }
 
-    this.statusService.sendMessage(
+    this.logService.log(
       'CodeMonkeyClubComponent',
       'challenger entered',
       member.id
@@ -138,7 +138,7 @@ export class CodeMonkeyClubComponent implements OnInit {
     const random = Math.random();
     const winner = random < 0.5 ? monkey1 : monkey2;
     const loser = winner === monkey1 ? monkey2 : monkey1;
-    this.statusService.sendMessage(
+    this.logService.log(
       'CodeMonkeyClubComponent',
       `Code monkey ${monkey1} and ${monkey2} starts coding heavily...`
     );
@@ -160,7 +160,7 @@ export class CodeMonkeyClubComponent implements OnInit {
 
     from(rounds).subscribe((round) => {
       setTimeout(() => {
-        this.statusService.sendMessage('CodeMonkeyClubComponent', round.text);
+        this.logService.log('CodeMonkeyClubComponent', round.text);
       }, round.round * 1000);
     });
   }

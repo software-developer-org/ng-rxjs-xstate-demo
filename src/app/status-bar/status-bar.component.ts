@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { StatusService } from '../status.service';
+import { LogService } from '../log.service';
 
 @Component({
   selector: 'app-status-bar',
@@ -10,13 +10,13 @@ import { StatusService } from '../status.service';
 })
 export class StatusBarComponent implements OnInit {
   // NOTE: subscribe is done in template using async pipe
-  statusMessages: Observable<string>;
+  logs$: Observable<string>;
 
-  constructor(private statusService: StatusService) {}
+  constructor(private logService: LogService) {}
 
   ngOnInit(): void {
-    // get messages for displaying in status bar template
-    this.statusMessages = this.statusService.getMessages().pipe(
+    // get logs for displaying in status bar template
+    this.logs$ = this.logService.getLogs().pipe(
       // tap: a pipe operator that 'peaks' for incoming data
       // this is useful e.g. for side effects
       tap(() => {

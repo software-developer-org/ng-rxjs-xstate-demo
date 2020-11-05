@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { StatusService } from './status.service';
+import { LogService } from './log.service';
 
 export class Entity {
   constructor(
@@ -17,7 +17,7 @@ export class BackendService {
   clubs: Entity[] = [];
   members: Entity[] = [];
 
-  constructor(private statusService: StatusService) {
+  constructor(private logService: LogService) {
     new Array(7)
       .fill('')
       .forEach((_, index) =>
@@ -40,14 +40,14 @@ export class BackendService {
   }
 
   getClubs(): Observable<Entity[]> {
-    this.statusService.sendMessage('BackendService', 'Request GET /clubs');
+    this.logService.log('BackendService', 'Request GET /clubs');
     const obs$ = new Observable<Entity[]>((subscriber) => {
       // simulate server error
       if (this.clubs.length === 9) {
         subscriber.error(new Error('Response GET /clubs: Bad Exception'));
       } else {
         setTimeout(() => {
-          this.statusService.sendMessage(
+          this.logService.log(
             'BackendService',
             'Response GET /clubs'
           );
@@ -72,10 +72,10 @@ export class BackendService {
   }
 
   getClubById(id: number): Observable<Entity> {
-    this.statusService.sendMessage('BackendService', `Request GET /club/${id}`);
+    this.logService.log('BackendService', `Request GET /club/${id}`);
     const obs$ = new Observable<Entity>((subscriber) => {
       setTimeout(() => {
-        this.statusService.sendMessage(
+        this.logService.log(
           'BackendService',
           `Response GET /clubs/${id}`
         );
@@ -89,12 +89,12 @@ export class BackendService {
 
   getClubRulez(clubId: number): Observable<Entity> {
     const obs$ = new Observable<Entity>((subscriber) => {
-      this.statusService.sendMessage(
+      this.logService.log(
         'BackendService',
         `Request GET /club/${clubId}/rulez`
       );
       setTimeout(() => {
-        this.statusService.sendMessage(
+        this.logService.log(
           'BackendService',
           `Response GET /club/${clubId}/rulez`
         );
@@ -118,9 +118,9 @@ export class BackendService {
 
   getMembers(): Observable<Entity[]> {
     const obs$ = new Observable<Entity[]>((subscriber) => {
-      this.statusService.sendMessage('BackendService', `Request GET /members`);
+      this.logService.log('BackendService', `Request GET /members`);
       setTimeout(() => {
-        this.statusService.sendMessage(
+        this.logService.log(
           'BackendService',
           `Response GET /members`
         );
