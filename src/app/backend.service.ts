@@ -40,14 +40,14 @@ export class BackendService {
   }
 
   getClubs(): Observable<Entity[]> {
-    this.statusService.addMessage('BackendService', 'Request GET /clubs');
+    this.statusService.sendMessage('BackendService', 'Request GET /clubs');
     const obs$ = new Observable<Entity[]>((subscriber) => {
       // simulate server error
       if (this.clubs.length === 9) {
         subscriber.error(new Error('Response GET /clubs: Bad Exception'));
       } else {
         setTimeout(() => {
-          this.statusService.addMessage(
+          this.statusService.sendMessage(
             'BackendService',
             'Response GET /clubs'
           );
@@ -72,10 +72,10 @@ export class BackendService {
   }
 
   getClubById(id: number): Observable<Entity> {
-    this.statusService.addMessage('BackendService', `Request GET /club/${id}`);
+    this.statusService.sendMessage('BackendService', `Request GET /club/${id}`);
     const obs$ = new Observable<Entity>((subscriber) => {
       setTimeout(() => {
-        this.statusService.addMessage(
+        this.statusService.sendMessage(
           'BackendService',
           `Response GET /clubs/${id}`
         );
@@ -89,12 +89,12 @@ export class BackendService {
 
   getClubRulez(clubId: number): Observable<Entity> {
     const obs$ = new Observable<Entity>((subscriber) => {
-      this.statusService.addMessage(
+      this.statusService.sendMessage(
         'BackendService',
         `Request GET /club/${clubId}/rulez`
       );
       setTimeout(() => {
-        this.statusService.addMessage(
+        this.statusService.sendMessage(
           'BackendService',
           `Response GET /club/${clubId}/rulez`
         );
@@ -118,9 +118,9 @@ export class BackendService {
 
   getMembers(): Observable<Entity[]> {
     const obs$ = new Observable<Entity[]>((subscriber) => {
-      this.statusService.addMessage('BackendService', `Request GET /members`);
+      this.statusService.sendMessage('BackendService', `Request GET /members`);
       setTimeout(() => {
-        this.statusService.addMessage(
+        this.statusService.sendMessage(
           'BackendService',
           `Response GET /members`
         );

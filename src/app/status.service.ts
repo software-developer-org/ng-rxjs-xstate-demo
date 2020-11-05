@@ -12,7 +12,7 @@ export class StatusService {
 
   constructor() {}
 
-  addMessage(source: string, ...args: any[]): void {
+  sendMessage(source: string, ...args: any[]): void {
     let prefix = getTime() + ' ' + source;
     while (prefix.length < 40) {
       prefix += ' ';

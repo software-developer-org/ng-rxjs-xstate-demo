@@ -39,7 +39,7 @@ export class CodeMonkeyClubComponent implements OnInit {
       (club) => {
         this.club = club;
       },
-      (error) => this.statusService.addMessage('CodeMonkeyClubComponent', error)
+      (error) => this.statusService.sendMessage('CodeMonkeyClubComponent', error)
     );
 
     // get rulez
@@ -47,7 +47,7 @@ export class CodeMonkeyClubComponent implements OnInit {
       (rulez) => {
         this.rulez = rulez;
       },
-      (error) => this.statusService.addMessage('CodeMonkeyClubComponent', error)
+      (error) => this.statusService.sendMessage('CodeMonkeyClubComponent', error)
     );
 
     // get members
@@ -56,7 +56,7 @@ export class CodeMonkeyClubComponent implements OnInit {
         this.members = [];
         members.forEach((member, index) => {
           setTimeout(() => {
-            this.statusService.addMessage(
+            this.statusService.sendMessage(
               'CodeMonkeyClubComponent',
               'introducting member',
               member.id
@@ -68,7 +68,7 @@ export class CodeMonkeyClubComponent implements OnInit {
           }, index * 200 + 200);
         });
       },
-      (error) => this.statusService.addMessage('CodeMonkeyClubComponent', error)
+      (error) => this.statusService.sendMessage('CodeMonkeyClubComponent', error)
     );
   }
 
@@ -80,7 +80,7 @@ export class CodeMonkeyClubComponent implements OnInit {
     const leaveChallenger = this.challengers.find((s) => s.id === member.id);
     if (leaveChallenger) {
       this.challengers = this.challengers.filter((s) => s.id !== member.id);
-      this.statusService.addMessage(
+      this.statusService.sendMessage(
         'CodeMonkeyClubComponent',
         'challenger leaving',
         member.id
@@ -92,7 +92,7 @@ export class CodeMonkeyClubComponent implements OnInit {
       return;
     }
 
-    this.statusService.addMessage(
+    this.statusService.sendMessage(
       'CodeMonkeyClubComponent',
       'challenger entered',
       member.id
@@ -111,7 +111,7 @@ export class CodeMonkeyClubComponent implements OnInit {
     const random = Math.random();
     const winner = random < 0.5 ? monkey1 : monkey2;
     const loser = winner === monkey1 ? monkey2 : monkey1;
-    this.statusService.addMessage(
+    this.statusService.sendMessage(
       'CodeMonkeyClubComponent',
       `Code monkey ${monkey1} and ${monkey2} starts coding heavily...`
     );
@@ -133,7 +133,7 @@ export class CodeMonkeyClubComponent implements OnInit {
 
     from(rounds).subscribe((round) => {
       setTimeout(() => {
-        this.statusService.addMessage('CodeMonkeyClubComponent', round.text);
+        this.statusService.sendMessage('CodeMonkeyClubComponent', round.text);
       }, round.round * 1000);
     });
   }

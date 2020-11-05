@@ -27,7 +27,7 @@ export class CodeMonkeyNetworkComponent implements OnInit {
         this.clubs = [];
         clubs.forEach((club, index) => {
           setTimeout(() => {
-            this.statusService.addMessage(
+            this.statusService.sendMessage(
               'CodeMonkeyNetworkComponent',
               'entering code monkey club',
               club.id
@@ -39,7 +39,7 @@ export class CodeMonkeyNetworkComponent implements OnInit {
           }, index * 500 + 500);
         });
       },
-      (error) => this.statusService.addMessage('CodeMonkeyClubComponent', error)
+      (error) => this.statusService.sendMessage('CodeMonkeyClubComponent', error)
     );
     // this.spinner.show();
   }
