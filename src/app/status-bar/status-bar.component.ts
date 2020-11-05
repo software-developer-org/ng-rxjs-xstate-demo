@@ -9,13 +9,18 @@ import { StatusService } from '../status.service';
   styleUrls: ['./status-bar.component.scss'],
 })
 export class StatusBarComponent implements OnInit {
+  // NOTE: subscribe is done in template using async pipe
   statusMessages: Observable<string>;
 
   constructor(private statusService: StatusService) {}
 
   ngOnInit(): void {
+    // get messages for displaying in status bar template
     this.statusMessages = this.statusService.getMessages().pipe(
+      // tap: a pipe operator that 'peaks' for incoming data
+      // this is useful e.g. for side effects
       tap(() => {
+        // auto scroll textarea to bottom
         this.scrollToBottom();
       }),
     );
