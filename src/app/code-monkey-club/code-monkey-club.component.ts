@@ -107,7 +107,11 @@ export class CodeMonkeyClubComponent implements OnInit {
 
   enterChallenger(member: Entity): void {
     // only when all members are loaded a code challenge may start
-    if (!this.membersLoaded) {
+    if (
+      !this.membersLoaded ||
+      // only noobs needs can be selected for a challenge
+      !this.isFirsttime(member)
+    ) {
       return;
     }
     const leaveChallenger = this.challengers.find((s) => s.id === member.id);
