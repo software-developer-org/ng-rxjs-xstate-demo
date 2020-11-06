@@ -106,10 +106,13 @@ export class CodeMonkeyClubComponent implements OnInit {
   }
 
   enterChallenger(member: Entity): void {
-    // only when all members are loaded a code challenge may start
+    // cases where a member can not be selected for a challenge
     if (
+      // in case another challenge is ongoing
+      this.codeChallengeStarted ||
+      // not all members are loaded
       !this.membersLoaded ||
-      // only noobs needs can be selected for a challenge
+      // not a noob (only noobs needs can be selected for a challenge)
       !this.isFirsttime(member)
     ) {
       return;
