@@ -89,7 +89,8 @@ export class CodeMonkeyClubComponent implements OnInit {
               member.id
             );
             this.members.push(member);
-            if (members.length === index + 1) { // has member has been added
+            if (members.length === index + 1) {
+              // has member has been added
               // set flag for all members being loaded
               this.membersLoaded = true;
             }
@@ -170,14 +171,14 @@ export class CodeMonkeyClubComponent implements OnInit {
         this.logService.log('CodeMonkeyClubComponent', round.text);
         if (round.round === 3) {
           // challenge is over
-        // set flag and allow user from starting another challenge
-        this.codeChallengeStarted = false;
+          // set flag and allow user from starting another challenge
+          this.codeChallengeStarted = false;
         }
       }, round.round * 3000);
     });
   }
 
   isFirsttime(entity: Entity): boolean {
-    return entity.description.some(e => e === MemberStatus.Noob);
+    return entity.description.some((e) => e === MemberStatus.Noob);
   }
 }
