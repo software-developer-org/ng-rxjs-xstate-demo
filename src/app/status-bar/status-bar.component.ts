@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { LogService } from '../log.service';
+import { LogService } from '../service/log.service';
 
 @Component({
   selector: 'app-status-bar',

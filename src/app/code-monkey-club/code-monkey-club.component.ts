@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { from } from 'rxjs';
-import { BackendService, Entity, MemberStatus } from '../backend.service';
-import { LogService } from '../log.service';
+import { BackendService, Entity, MemberStatus } from '../service/backend.service';
+import { LogService } from '../service/log.service';
 
 @Component({
   selector: 'app-code-monkey-club',

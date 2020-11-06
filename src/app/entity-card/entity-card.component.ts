@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Entity } from '../backend.service';
+import { Entity } from '../service/backend.service';
 
 @Component({
   selector: 'app-entity-card',

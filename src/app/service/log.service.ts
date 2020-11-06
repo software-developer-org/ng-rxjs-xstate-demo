@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { getTime } from './utils';
+import { getTime } from '../utils';
 
 @Injectable({
   providedIn: 'root',

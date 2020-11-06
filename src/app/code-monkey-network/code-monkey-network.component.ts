@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { BackendService, Entity } from '../backend.service';
-import { LogService } from '../log.service';
+import { BackendService, Entity } from '../service/backend.service';
+import { LogService } from '../service/log.service';
 
 @Component({
   selector: 'app-code-monkey-clubs',
