@@ -141,8 +141,10 @@ export class CodeMonkeyClubComponent implements OnInit {
   startChallenge(): void {
     // set flag and disable user from starting another challenge
     this.codeChallengeStarted = true;
-    const monkey1 = this.challengers[0].id;
-    const monkey2 = this.challengers[1].id;
+    const challenger0 = this.challengers[0];
+    const challenger1 = this.challengers[1];
+    const monkey1 = challenger0.id;
+    const monkey2 = challenger1.id;
     const random = Math.random();
     const winner = random < 0.5 ? monkey1 : monkey2;
     const loser = winner === monkey1 ? monkey2 : monkey1;
@@ -173,6 +175,13 @@ export class CodeMonkeyClubComponent implements OnInit {
           // challenge is over
           // set flag and allow user from starting another challenge
           this.codeChallengeStarted = false;
+
+          // challengers are pros now!
+          this.changeMemberStatus(challenger0);
+          this.changeMemberStatus(challenger1);
+
+          // clear challengers
+          this.challengers = [];
         }
       }, round.round * 3000);
     });
@@ -180,5 +189,12 @@ export class CodeMonkeyClubComponent implements OnInit {
 
   isFirsttime(entity: Entity): boolean {
     return entity.description.some((e) => e === MemberStatus.Noob);
+  }
+
+  changeMemberStatus(member: Entity): void {
+    const index = member.description.indexOf(MemberStatus.Noob);
+    if (index !== -1) {
+      member.description[index] = MemberStatus.Pro;
+    }
   }
 }
