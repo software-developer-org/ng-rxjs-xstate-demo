@@ -17,7 +17,7 @@
     fxFlex="40"
     fxLayoutAlign="center center"
     mat-button
-    [disabled]="challengers.length < 2"
+    [disabled]="challengers.length < 2 || codeChallengeStarted"
     (click)="startChallenge()"
   >
     Start Code Challenge!

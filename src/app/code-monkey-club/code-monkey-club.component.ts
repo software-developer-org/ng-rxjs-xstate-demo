@@ -14,7 +14,12 @@ export class CodeMonkeyClubComponent implements OnInit {
   club: Entity;
   rulez: Entity;
   members: Entity[];
+
+  // flags for controlling ui flow
+  // disable selecting a member while loading is not finished
   membersLoaded = false;
+  // disable challenge button while another challenge is running
+  codeChallengeStarted = false;
 
   /**
    * Two coders required for a challenge
@@ -84,7 +89,8 @@ export class CodeMonkeyClubComponent implements OnInit {
               member.id
             );
             this.members.push(member);
-            if (members.length === index + 1) {
+            if (members.length === index + 1) { // has member has been added
+              // set flag for all members being loaded
               this.membersLoaded = true;
             }
           }, index * 200 + 200);
@@ -132,6 +138,8 @@ export class CodeMonkeyClubComponent implements OnInit {
   }
 
   startChallenge(): void {
+    // set flag and disable user from starting another challenge
+    this.codeChallengeStarted = true;
     const monkey1 = this.challengers[0].id;
     const monkey2 = this.challengers[1].id;
     const random = Math.random();
@@ -160,7 +168,12 @@ export class CodeMonkeyClubComponent implements OnInit {
     from(rounds).subscribe((round) => {
       setTimeout(() => {
         this.logService.log('CodeMonkeyClubComponent', round.text);
-      }, round.round * 1000);
+        if (round.round === 3) {
+          // challenge is over
+        // set flag and allow user from starting another challenge
+        this.codeChallengeStarted = false;
+        }
+      }, round.round * 3000);
     });
   }
 }
