@@ -60,7 +60,7 @@ In reactive programming streams are respresented by one core type in RxJS: [Obse
 
 Operations on an Observable can be done through [pipe operators](https://rxjs.dev/guide/operators) like map, merge, catchError, etc.
 
-A [Subject](https://rxjs.dev/guide/subject) is a special type of Observable allowing multicasting.
+A [Subject](https://rxjs.dev/guide/subject) is a special type of [Observable](https://rxjs.dev/guide/observable) allowing multicasting.
 
 ``` typescript
   // variables representing streams, values are handled via streams
@@ -158,14 +158,14 @@ All actions like code fights or backend calls are logging into a status bar show
 
 The following sections provide RxJS and XState examples in this demo app.
 
-# RxJS log service example: Sharing Data through Streams
+# RxJS|Log Service Example: Sharing Data through Streams
 
 One common usage is sharing data between components. Especially data changing constantly through time are perfect candidates for using streams.
 
-RxJS' [Subject](https://rxjs.dev/guide/subject) is special type of an [Observable](https://rxjs.dev/guide/observable):
+RxJS' [Subject](https://rxjs.dev/guide/subject) is a special [Observable](https://rxjs.dev/guide/observable). Whereas from an Observable you can only receive data, a Subject may also send data:
 
-- Sending data: [Subject.next(value?: T)](https://rxjs.dev/api/index/class/Subject#next-) allows a component to send data.
-- Receiving data: [Object.subscribe()](https://rxjs.dev/api/index/class/Observable#subscribe-) allows a component to receive data.
+- [Subject.next(value?: T)](https://rxjs.dev/api/index/class/Subject#next-) sends data.
+- [Object.subscribe()](https://rxjs.dev/api/index/class/Observable#subscribe-) receives data.
 
 ### Log Service
 Here is a log service allowing a producer (component) sending and a consumer (component) receiving logs:
@@ -297,11 +297,13 @@ export class StatusBarComponent implements OnInit {
 }
 ```
 
-# RxJS `Observable.subscribe()` example - Observables are Descriptive and not executed until `subscribe()` is called!
+# RxJS|`Observable.subscribe()` - Observables are Descriptive and not executed before `subscribe()`!
 
-An Observable is descriptive. This means it is not executed immediately. This happens when it [subscribe()](https://rxjs.dev/api/index/class/Observable#subscribe-) is called.
+An Observable is descriptive and (normally) only executed when [subscribe()](https://rxjs.dev/api/index/class/Observable#subscribe-) is called.
 
-## Status Bar example: Subscribing and Displaying Logs
+NB: normally means it is a cold and not a hot Observable. You can find a good explanation [here](https://medium.com/codingthesmartway-com-blog/getting-started-with-rxjs-part-3-hot-and-cold-observables-4713757c9a88).
+
+## Status Bar Example: Subscribing and Displaying Logs
 
 The status bar component holds a logs$ Observable:
 
@@ -370,7 +372,7 @@ export class StatusBarComponent implements OnInit {
 }
 ```
 
-# RxJS `Observable.unsubscribe()` examples
+# RxJS|`Observable.unsubscribe()` - Clean Up and Cancel
 
 ## `unsubscribe()` to the Rescue: Clean Up Resources, Avoid Memory Leaks and Side Effects
 
