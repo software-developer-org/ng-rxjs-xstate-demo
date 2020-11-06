@@ -297,11 +297,11 @@ export class StatusBarComponent implements OnInit {
 }
 ```
 
-# RxJS Observable.subscribe() example - Observables are Descriptive and not executed until `subscribe()` is called!
+# RxJS `Observable.subscribe()` example - Observables are Descriptive and not executed until `subscribe()` is called!
 
 An Observable is descriptive. This means it is not executed immediately. This happens when it [subscribe()](https://rxjs.dev/api/index/class/Observable#subscribe-) is called.
 
-## Status Bar example: Subscribing and Displaying logs
+## Status Bar example: Subscribing and Displaying Logs
 
 The status bar component holds a logs$ Observable:
 
@@ -372,7 +372,7 @@ export class StatusBarComponent implements OnInit {
 
 # RxJS `Observable.unsubscribe()` examples
 
-## `unsubscribe()` to Clean Up Resources: Avoid Memory Leaks and Side Effects
+## `unsubscribe()` to the Rescue: Clean Up Resources, Avoid Memory Leaks and Side Effects
 
 Imagine there is a component listening to mouse down events:
 
@@ -439,7 +439,7 @@ export class CodeMonkeyClubComponent implements OnInit, OnDestroy {
 }
 ```
 
-## `unsubscribe()` to Prevent `subscribe()` being run: HTTP requests and responses
+## `unsubscribe()` Cancels `subscribe()`: HTTP Requests and Responses
 
 Client apps often require data from a backend. The data are then processed and displayed in various user interfaces. This may be handled through HTTP requests and responses.
 
@@ -526,13 +526,13 @@ It may be not obvious, but often a process or user action is started and not fin
 0:16:19.432 CodeMonkeyClubComponent     : code monkey club 3 : member 9
 ```
 
-What you see here is that all views are finishing all HTTP requests:
+What you see here is that each view is finishing all HTTP requests:
 
-1. view for club 1,
-2. network view, and
-3. view for club 3 handles all HTTP responses.
+1. the view for club 1,
+2. the network view, and
+3. the view for club 3 handles all HTTP responses.
 
-Each view subscribes and handles HTTP responses - even if a user leaves a view immediately.
+Each view subscribes and handles HTTP responses - even if a user leaves a view immediately!
 
 Using unsubscribe() allows to cancel an HTTP response in case it hasn't been started yet:
 
