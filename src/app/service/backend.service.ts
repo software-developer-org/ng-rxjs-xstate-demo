@@ -52,13 +52,15 @@ export class BackendService {
     const obs$ = new Observable<Entity[]>((subscriber) => {
       // simulate server error
       if (this.clubs.length === 9) {
-        subscriber.error(new Error('Response GET /clubs: Bad Exception'));
+        setTimeout(() => {
+          subscriber.error(new Error('Response GET /clubs: Bad Exception'));
+        }, 3000);
       } else {
         setTimeout(() => {
           this.logService.log('BackendService', 'Response GET /clubs');
           subscriber.next(this.clubs);
           subscriber.complete();
-        }, 1000);
+        }, 3000);
       }
     });
     return obs$;
