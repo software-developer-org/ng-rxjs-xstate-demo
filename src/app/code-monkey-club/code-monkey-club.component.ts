@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { from } from 'rxjs';
-import { BackendService, Entity } from '../backend.service';
+import { BackendService, Entity, MemberStatus } from '../backend.service';
 import { LogService } from '../log.service';
 
 @Component({
@@ -175,5 +175,9 @@ export class CodeMonkeyClubComponent implements OnInit {
         }
       }, round.round * 3000);
     });
+  }
+
+  isFirsttime(entity: Entity): boolean {
+    return entity.description.some(e => e === MemberStatus.Noob);
   }
 }

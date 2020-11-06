@@ -49,6 +49,7 @@
       [entity]="member"
       (click)="enterChallenger(member)"
       [class.challenger]="isChallenger(member.id)"
+      [class.noob]="isFirsttime(member) && !isChallenger(member.id)"
     >
     </app-entity-card>
   </div>
