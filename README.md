@@ -297,7 +297,7 @@ export class StatusBarComponent implements OnInit {
 }
 ```
 
-# RxJS Observable.subscribe() example - Observables are Descriptive and not executed until subscribe() is called!
+# RxJS Observable.subscribe() example - Observables are Descriptive and not executed until `subscribe()` is called!
 
 An Observable is descriptive. This means it is not executed immediately. This happens when it [subscribe()](https://rxjs.dev/api/index/class/Observable#subscribe-) is called.
 
@@ -370,9 +370,9 @@ export class StatusBarComponent implements OnInit {
 }
 ```
 
-# RxJS Observable.unsubscribe() examples
+# RxJS `Observable.unsubscribe()` examples
 
-## Unsubscribe to Clean Up Resources: Avoid Memory Leaks and Side Effects
+## `unsubscribe()` to Clean Up Resources: Avoid Memory Leaks and Side Effects
 
 Imagine there is a component listening to mouse down events:
 
@@ -437,6 +437,208 @@ export class CodeMonkeyClubComponent implements OnInit, OnDestroy {
   }
   ...
 }
+```
+
+## `unsubscribe()` to Prevent `subscribe()` being run: HTTP requests and responses
+
+Client apps often require data from a backend. The data are then processed and displayed in various user interfaces. This may be handled through HTTP requests and responses.
+
+The demo app a user starts with the network view. In this view it selects club 1 and jumps to this code monkey club view. This view has the following logs:
+
+```log
+0:1:29.502 BackendService               : Request GET /club/1
+0:1:29.504 BackendService               : Request GET /club/1/rulez
+0:1:29.505 BackendService               : Request GET /members
+0:1:29.707 BackendService               : Response GET /members
+0:1:29.921 CodeMonkeyClubComponent      : code monkey club 1 : member 0
+0:1:30.004 BackendService               : Response GET /clubs/1
+0:1:30.005 CodeMonkeyClubComponent      : showing details for code monkey club 1
+0:1:30.109 CodeMonkeyClubComponent      : code monkey club 1 : member 1
+0:1:30.311 CodeMonkeyClubComponent      : code monkey club 1 : member 2
+0:1:30.509 CodeMonkeyClubComponent      : code monkey club 1 : member 3
+0:1:30.718 CodeMonkeyClubComponent      : code monkey club 1 : member 4
+0:1:30.910 CodeMonkeyClubComponent      : code monkey club 1 : member 5
+0:1:31.005 BackendService               : Response GET /club/1/rulez
+0:1:31.005 CodeMonkeyClubComponent      : showing rulez
+0:1:31.109 CodeMonkeyClubComponent      : code monkey club 1 : member 6
+0:1:31.323 CodeMonkeyClubComponent      : code monkey club 1 : member 7
+0:1:31.523 CodeMonkeyClubComponent      : code monkey club 1 : member 8
+0:1:31.708 CodeMonkeyClubComponent      : code monkey club 1 : member 9
+```
+
+It may be not obvious, but often a process or user action is started and not finished. A user may start an action or enter a view by mistake. In this case another user mistakenly entered club 1, jumps back immediately, and enters club 3:
+
+```log
+...
+// user enters view for club 1
+0:16:13.456 BackendService              : Request GET /club/1
+0:16:13.457 BackendService              : Request GET /club/1/rulez
+0:16:13.457 BackendService              : Request GET /members
+0:16:13.659 BackendService              : Response GET /members
+0:16:13.861 CodeMonkeyClubComponent     : code monkey club 1 : member 0
+// user goes back to network view, handling a HTTP request
+0:16:13.934 BackendService              : Request GET /clubs
+// ... in the meanwhile previous view from club 1 is still processed!
+0:16:13.957 BackendService              : Response GET /clubs/1
+0:16:13.958 CodeMonkeyClubComponent     : showing details for code monkey club 1
+0:16:14.060 CodeMonkeyClubComponent     : code monkey club 1 : member 1
+0:16:14.274 CodeMonkeyClubComponent     : code monkey club 1 : member 2
+0:16:14.476 CodeMonkeyClubComponent     : code monkey club 1 : member 3
+0:16:14.677 CodeMonkeyClubComponent     : code monkey club 1 : member 4
+0:16:14.860 CodeMonkeyClubComponent     : code monkey club 1 : member 5
+// ... while current network view is processing HTTP Response
+0:16:14.936 BackendService              : Response GET /clubs
+// ... previous view continues processing
+0:16:14.958 BackendService              : Response GET /club/1/rulez
+0:16:14.958 CodeMonkeyClubComponent     : showing rulez
+0:16:15.060 CodeMonkeyClubComponent     : code monkey club 1 : member 6
+0:16:15.261 CodeMonkeyClubComponent     : code monkey club 1 : member 7
+0:16:15.436 CodeMonkeyNetworkComponent  : Adding to network:  0
+0:16:15.460 CodeMonkeyClubComponent     : code monkey club 1 : member 8
+// ... finally previous view is finished!
+0:16:15.661 CodeMonkeyClubComponent     : code monkey club 1 : member 9
+0:16:15.937 CodeMonkeyNetworkComponent  : Adding to network:  1
+0:16:16.452 CodeMonkeyNetworkComponent  : Adding to network:  2
+// ... network view displays club 3
+0:16:16.939 CodeMonkeyNetworkComponent  : Adding to network:  3
+// ... user clicks and jumps to club 3
+0:16:17.229 BackendService              : Request GET /club/3
+0:16:17.230 BackendService              : Request GET /club/3/rulez
+0:16:17.230 BackendService              : Request GET /members
+0:16:17.431 BackendService              : Response GET /members
+// ... while now former network view keeps processing!
+0:16:17.437 CodeMonkeyNetworkComponent  : Adding to network:  4
+0:16:17.645 CodeMonkeyClubComponent     : code monkey club 3 : member 0
+0:16:17.730 BackendService              : Response GET /clubs/3
+0:16:17.731 CodeMonkeyClubComponent     : showing details for code monkey club 3
+0:16:17.832 CodeMonkeyClubComponent     : code monkey club 3 : member 1
+0:16:17.948 CodeMonkeyNetworkComponent  : Adding to network:  5
+0:16:18.032 CodeMonkeyClubComponent     : code monkey club 3 : member 2
+0:16:18.234 CodeMonkeyClubComponent     : code monkey club 3 : member 3
+0:16:18.435 CodeMonkeyClubComponent     : code monkey club 3 : member 4
+0:16:18.440 CodeMonkeyNetworkComponent  : Adding to network:  6
+0:16:18.636 CodeMonkeyClubComponent     : code monkey club 3 : member 5
+0:16:18.730 BackendService              : Response GET /club/3/rulez
+0:16:18.731 CodeMonkeyClubComponent     : showing rulez
+0:16:18.832 CodeMonkeyClubComponent     : code monkey club 3 : member 6
+0:16:19.038 CodeMonkeyClubComponent     : code monkey club 3 : member 7
+0:16:19.239 CodeMonkeyClubComponent     : code monkey club 3 : member 8
+0:16:19.432 CodeMonkeyClubComponent     : code monkey club 3 : member 9
+```
+
+What you see here is that all views are finishing all HTTP requests:
+
+1. view for club 1,
+2. network view, and
+3. view for club 3 handles all HTTP responses.
+
+Each view subscribes and handles HTTP responses - even if a user leaves a view immediately.
+
+Using unsubscribe() allows to cancel an HTTP response in case it hasn't been started yet:
+
+```typescript
+export class CodeMonkeyNetworkComponent implements OnInit, OnDestroy {
+  ...
+  getClubsSubscription: Subscription;
+  ...
+  loadData(): void {
+    this.getClubsSubscription = this.backendService.getClubs().subscribe(
+      ...
+    );
+  }
+  ...
+  ngOnDestroy(): void {
+    if (this.getClubsSubscription) {
+      this.getClubsSubscription.unsubscribe();
+    }
+  }
+  ...
+}
+```
+
+```typescript
+export class CodeMonkeyClubComponent implements OnInit, OnDestroy {
+  ...
+  getClubByIdSubscription: Subscription;
+  getClubRulezSubscription: Subscription;
+  getMembersSubscription: Subscription;
+  ...
+  loadData(): void {
+    ...
+    this.getClubByIdSubscription = this.backendService.getClubById(id).subscribe(
+      ...
+    );
+
+    // get rulez
+    this.getClubRulezSubscription = this.backendService.getClubRulez(id).subscribe(
+      ...
+    );
+
+    // get members
+    this.getMembersSubscription = this.backendService.getMembers().subscribe(
+      ...
+    );
+  }
+
+  ngOnDestroy(): void {
+    if (this.getClubByIdSubscription) {
+      this.getClubByIdSubscription.unsubscribe();
+    }
+    if (this.getClubRulezSubscription) {
+      this.getClubRulezSubscription.unsubscribe();
+    }
+    if (this.getMembersSubscription) {
+      this.getMembersSubscription.unsubscribe();
+    }
+  }
+  ...
+}
+```
+
+The result log looks like this:
+
+```log
+// user enters view for club 1
+0:50:09.785 BackendService              : Request GET /club/1
+0:50:09.786 BackendService              : Request GET /club/1/rulez
+0:50:09.786 BackendService              : Request GET /members
+// user goes back to network view, handling a HTTP request
+0:50:10.131 BackendService              : Request GET /clubs
+0:50:11.133 BackendService              : Response GET /clubs
+0:50:11.635 CodeMonkeyNetworkComponent  : Adding to network:  0
+// ... in the meanwhile previous view from club 1 returns HTTP responses but(!) subscription are not executed!
+0:50:11.787 BackendService              : Response GET /clubs/1
+0:50:11.788 BackendService              : Response GET /club/1/rulez
+0:50:11.789 BackendService              : Response GET /members
+// ... while current network view is processing HTTP response
+0:50:12.148 CodeMonkeyNetworkComponent  : Adding to network:  1
+0:50:12.636 CodeMonkeyNetworkComponent  : Adding to network:  2
+// ... network view displays club 3
+0:50:13.141 CodeMonkeyNetworkComponent  : Adding to network:  3
+// ... user clicks and jumps to club 3
+0:50:13.507 BackendService              : Request GET /club/3
+0:50:13.507 BackendService              : Request GET /club/3/rulez
+0:50:13.507 BackendService              : Request GET /members
+// ... previous network view finishes subscription job
+0:50:13.635 CodeMonkeyNetworkComponent  : Adding to network:  4
+0:50:14.135 CodeMonkeyNetworkComponent  : Adding to network:  5
+0:50:14.634 CodeMonkeyNetworkComponent  : Adding to network:  6
+// ... current view for club 3 finishes all subscriptions and HTTP responses
+0:50:15.514 BackendService              : Response GET /clubs/3
+0:50:15.514 CodeMonkeyClubComponent     : showing details for code monkey club 3
+0:50:15.516 BackendService              : Response GET /club/3/rulez
+0:50:15.516 CodeMonkeyClubComponent     : showing rulez
+0:50:15.521 BackendService              : Response GET /members
+0:50:15.729 CodeMonkeyClubComponent     : code monkey club 3 : member 0
+0:50:15.929 CodeMonkeyClubComponent     : code monkey club 3 : member 1
+0:50:16.121 CodeMonkeyClubComponent     : code monkey club 3 : member 2
+0:50:16.321 CodeMonkeyClubComponent     : code monkey club 3 : member 3
+0:50:16.535 CodeMonkeyClubComponent     : code monkey club 3 : member 4
+0:50:16.722 CodeMonkeyClubComponent     : code monkey club 3 : member 5
+0:50:16.922 CodeMonkeyClubComponent     : code monkey club 3 : member 6
+0:50:17.121 CodeMonkeyClubComponent     : code monkey club 3 : member 7
+0:50:17.324 CodeMonkeyClubComponent     : code monkey club 3 : member 8
+0:50:17.524 CodeMonkeyClubComponent     : code monkey club 3 : member 9
 ```
 
 # XState
