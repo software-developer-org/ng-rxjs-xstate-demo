@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LogService } from './log.service';
 
+export enum MemberStatus {
+  Noob = 'Noob: knowing half that much, like a pro already has forgotten of',
+  Pro = 'Pro: select * from USER where CLUE > 0 // 0 Results found',
+}
+
 export class Entity {
   constructor(
     public id: number,
@@ -34,7 +39,10 @@ export class BackendService {
       .fill('')
       .forEach((_, index) =>
         this.members.push(
-          new Entity(index, 'Monkey ' + index, ['Ready for project Chaos'])
+          new Entity(index, 'Monkey ' + index, [
+            'Ready for project Chaos',
+            Math.random() < 0.5 ? MemberStatus.Noob : MemberStatus.Pro,
+          ])
         )
       );
   }
@@ -47,10 +55,7 @@ export class BackendService {
         subscriber.error(new Error('Response GET /clubs: Bad Exception'));
       } else {
         setTimeout(() => {
-          this.logService.log(
-            'BackendService',
-            'Response GET /clubs'
-          );
+          this.logService.log('BackendService', 'Response GET /clubs');
           subscriber.next(this.clubs);
           subscriber.complete();
         }, 1000);
@@ -75,10 +80,7 @@ export class BackendService {
     this.logService.log('BackendService', `Request GET /club/${id}`);
     const obs$ = new Observable<Entity>((subscriber) => {
       setTimeout(() => {
-        this.logService.log(
-          'BackendService',
-          `Response GET /clubs/${id}`
-        );
+        this.logService.log('BackendService', `Response GET /clubs/${id}`);
         const entity = this.clubs.find((e) => e.id === id);
         subscriber.next(entity);
         subscriber.complete();
@@ -120,10 +122,7 @@ export class BackendService {
     const obs$ = new Observable<Entity[]>((subscriber) => {
       this.logService.log('BackendService', `Request GET /members`);
       setTimeout(() => {
-        this.logService.log(
-          'BackendService',
-          `Response GET /members`
-        );
+        this.logService.log('BackendService', `Response GET /members`);
         subscriber.next(this.members);
         subscriber.complete();
       }, 2200);
