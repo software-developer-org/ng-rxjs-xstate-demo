@@ -12,7 +12,10 @@ export class ExampleService {
 
   constructor(private logService: LogService) {}
 
-  do(source: string, commands: Command[]): void {
+  do(source: string, clearLogs: boolean, commands: Command[]): void {
+    if (clearLogs) {
+      this.logService.clear();
+    }
     commands.forEach((command, index) => {
       setTimeout(() => {
         // first exec

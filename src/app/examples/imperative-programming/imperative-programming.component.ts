@@ -21,14 +21,14 @@ export class ImperativeProgrammingComponent implements OnInit {
     this.a = null;
     this.b = null;
     const commands = [
-      new Command('a = 1', () => (this.a = 1)),
-      new Command('b = 2', () => (this.b = 2)),
+      new Command('a = ', () => (this.a = 1)),
+      new Command('b = ', () => (this.b = 2)),
       new Command('sum = a + b = ', () => (this.sum = this.a + this.b)),
       new Command('a = ', () => (this.a = 2)),
       new Command('sum = ', () => this.sum),
       new Command('b = ', () => (this.b = 3)),
       new Command('sum = ', () => this.sum),
     ];
-    this.exampleService.do('Imperative Programming', commands);
+    this.exampleService.do('Imperative Programming', true, commands);
   }
 }

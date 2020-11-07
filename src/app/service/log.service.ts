@@ -6,7 +6,7 @@ import { getTime } from '../utils';
   providedIn: 'root',
 })
 export class LogService {
-  private logs = '';
+  private logs;
 
   private logs$ = new Subject<string>();
 
@@ -19,15 +19,15 @@ export class LogService {
     }
 
     // concat arguments into one log message
-    const logMessage = args.reduce((last, current) => {
+    const logMessage = prefix + args.reduce((last, current) => {
       // get stack trace in case of error
       const stringVal = current?.stack ? current.stack : current;
       return last + ' ' + stringVal;
     }, ':');
 
     // adds a log in a new line
-    this.logs += `
-${prefix}${logMessage}`;
+    this.logs = !this.logs ? logMessage : this.logs + `
+${logMessage}`;
 
     // multicast logs to Subject
     this.logs$.next(this.logs);
@@ -35,5 +35,9 @@ ${prefix}${logMessage}`;
 
   getLogs(): Observable<string> {
     return this.logs$;
+  }
+
+  clear(): void {
+    this.logs = null;
   }
 }
