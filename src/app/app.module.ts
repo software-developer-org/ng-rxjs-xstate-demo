@@ -15,6 +15,7 @@ import { CodeMonkeyNetworkComponent } from './code-monkey-network/code-monkey-ne
 import { EntityCardComponent } from './entity-card/entity-card.component';
 import { ExamplesComponent } from './examples/examples.component';
 import { ImperativeProgrammingComponent } from './examples/imperative-programming/imperative-programming.component';
+import { ReactiveProgrammingComponent } from './examples/reactive-programming/reactive-programming.component';
 import { StatusBarComponent } from './status-bar/status-bar.component';
 
 @NgModule({
@@ -25,7 +26,8 @@ import { StatusBarComponent } from './status-bar/status-bar.component';
     CodeMonkeyClubComponent,
     StatusBarComponent,
     ExamplesComponent,
-    ImperativeProgrammingComponent
+    ImperativeProgrammingComponent,
+    ReactiveProgrammingComponent
   ],
   imports: [
     CommonModule,

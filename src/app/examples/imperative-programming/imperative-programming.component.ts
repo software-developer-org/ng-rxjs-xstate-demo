@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ExampleService } from '../example.service';
-import { Command } from '../example.service';
+import { ExampleService, Exec } from '../example.service';
 
 @Component({
   selector: 'imperative-programming',
@@ -21,13 +20,13 @@ export class ImperativeProgrammingComponent implements OnInit {
     this.a = null;
     this.b = null;
     const commands = [
-      new Command('a = ', () => (this.a = 1)),
-      new Command('b = ', () => (this.b = 2)),
-      new Command('sum = a + b = ', () => (this.sum = this.a + this.b)),
-      new Command('a = ', () => (this.a = 2)),
-      new Command('sum = ', () => this.sum),
-      new Command('b = ', () => (this.b = 3)),
-      new Command('sum = ', () => this.sum),
+      new Exec('a = ', () => (this.a = 1)),
+      new Exec('b = ', () => (this.b = 2)),
+      new Exec('sum = a + b = ', () => (this.sum = this.a + this.b)),
+      new Exec('a = ', () => (this.a = 2)),
+      new Exec('sum = ', () => this.sum),
+      new Exec('b = ', () => (this.b = 3)),
+      new Exec('sum = ', () => this.sum),
     ];
     this.exampleService.do('Imperative Programming', true, commands);
   }

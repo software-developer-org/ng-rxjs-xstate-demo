@@ -1,0 +1,5 @@
+<button mat-button color="primary" (click)="demo()">Demo!</button>
+<mat-label fxLayout="row">sum$ = a$ + b$</mat-label>
+<mat-label fxLayout="row"
+  >sum$ ({{ sum$ | async }}) = a$ ({{ a$ | async }}) + b$ ({{ b$ | async }})
+</mat-label>
