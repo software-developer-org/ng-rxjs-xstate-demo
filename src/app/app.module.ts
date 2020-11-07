@@ -18,6 +18,7 @@ import { ImperativeProgrammingComponent } from './examples/imperative-programmin
 import { ReactiveProgrammingComponent } from './examples/reactive-programming/reactive-programming.component';
 import { StatusBarComponent } from './status-bar/status-bar.component';
 import { ObservableUnicastComponent } from './examples/observable-unicast/observable-unicast.component';
+import { SubjectMulticastComponent } from './examples/subject-multicast/subject-multicast.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ObservableUnicastComponent } from './examples/observable-unicast/observ
     ExamplesComponent,
     ImperativeProgrammingComponent,
     ReactiveProgrammingComponent,
-    ObservableUnicastComponent
+    ObservableUnicastComponent,
+    SubjectMulticastComponent
   ],
   imports: [
     CommonModule,

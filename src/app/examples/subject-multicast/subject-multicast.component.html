@@ -1,0 +1,18 @@
+<button mat-button color="primary" (click)="demo()">Demo!</button>
+<mat-label fxLayout="row"
+  >subscriber 1 ({{ subject$ | async }}), subscriber 2 ({{ subject$ | async }}))
+</mat-label>
+<div fxLayout="row wrap">
+  <p fxFlex="grow">
+    Subjects multicast their messages to subscribers. Multicast mean the values
+    are shared amongst subscribers (similar to listeners).
+  </p>
+  <textarea fxFlex="grow" class="code">
+const obs$: Subject<number> = new Subject<textarea>();
+// multicast - subscribe does NOT invoke a new execution - similarly to listeners
+// each subscriber gets same value
+obs$.subscribe((value) => console.log('Subject: subscriber 1:', value)); // Subject: subscriber 1: 0.514955660934378
+obs$.subscribe((value) => console.log('Subject: subscriber 2:', value)); // Subject: subscriber 2: 0.514955660934378
+obs$.next(Math.random());
+  </textarea>
+</div>
