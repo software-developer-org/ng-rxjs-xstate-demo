@@ -13,8 +13,9 @@ import { AppComponent } from './app.component';
 import { CodeMonkeyClubComponent } from './code-monkey-club/code-monkey-club.component';
 import { CodeMonkeyNetworkComponent } from './code-monkey-network/code-monkey-network.component';
 import { EntityCardComponent } from './entity-card/entity-card.component';
-import { StatusBarComponent } from './status-bar/status-bar.component';
 import { ExamplesComponent } from './examples/examples.component';
+import { ImperativeProgrammingComponent } from './examples/imperative-programming/imperative-programming.component';
+import { StatusBarComponent } from './status-bar/status-bar.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ExamplesComponent } from './examples/examples.component';
     CodeMonkeyNetworkComponent,
     CodeMonkeyClubComponent,
     StatusBarComponent,
-    ExamplesComponent
+    ExamplesComponent,
+    ImperativeProgrammingComponent
   ],
   imports: [
     CommonModule,
