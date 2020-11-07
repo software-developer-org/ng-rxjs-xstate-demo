@@ -1,0 +1,21 @@
+<button mat-button color="primary" (click)="demo()">Demo!</button>
+<mat-label fxLayout="row"
+  >subscriber 1 ({{ obs$ | async }}), subscriber 2 ({{ obs$ | async }}))
+</mat-label>
+<div fxLayout="row wrap">
+  <p fxFlex="grow">
+    Observables unicast their messages to subscribers. Unicast mean the values are
+    not shared amongst subscribers. In other words each subscriber is executed
+    separately.
+  </p>
+  <textarea fxFlex="grow" class="code">
+    // unicast - subscribe invokes a NEW execution
+    // each subscriber gets a different value
+    const obs$: Observable<number> = new Observable<number>((subscriber) => {
+      subscriber.next(Math.random());
+    });
+    obs$.subscribe((value) => console.log('Observable: subscriber 1:', value)); // Observable: subscriber 1: 0.6785303847338093
+    obs$.subscribe((value) => console.log('Observable: subscriber 2:', value)); // Observable: subscriber 2: 0.01241168468788234
+    </textarea
+  >
+</div>
