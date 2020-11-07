@@ -5,7 +5,7 @@ import { CodeMonkeyNetworkComponent as CodeMonkeyNetworkComponent } from './code
 import { ExamplesComponent } from './examples/examples.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/code-monkey-club', pathMatch: 'full' },
+  { path: '', redirectTo: '/examples', pathMatch: 'full' },
   { path: 'examples', component: ExamplesComponent },
   { path: 'code-monkey-club', component: CodeMonkeyNetworkComponent },
   { path: 'code-monkey-club/:id', component: CodeMonkeyClubComponent },
