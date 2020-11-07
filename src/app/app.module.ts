@@ -4,6 +4,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatInputModule } from '@angular/material/input';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -32,6 +33,7 @@ import { ExamplesComponent } from './examples/examples.component';
     MatCardModule,
     MatButtonModule,
     MatExpansionModule,
+    MatInputModule,
     BrowserAnimationsModule,
     NgxSpinnerModule
   ],
