@@ -20,9 +20,9 @@ export class ObservableUnicastComponent implements OnInit {
     });
 
     const commands = [
-      new Exec('a = ', () => {
+      new Exec('random value changes for each subscriber! ', () => {
         this.obs$.subscribe();
-        return 1;
+        return '';
       }),
     ];
     this.exampleService.do('Imperative Programming', true, commands);
