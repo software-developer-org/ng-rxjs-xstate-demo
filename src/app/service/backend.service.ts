@@ -48,8 +48,8 @@ export class BackendService {
   }
 
   getClubs(): Observable<Entity[]> {
-    this.logService.log('BackendService', 'Request GET /clubs');
     const obs$ = new Observable<Entity[]>((subscriber) => {
+      this.logService.log('BackendService', 'Request GET /clubs');
       // simulate server error
       if (this.clubs.length === 9) {
         setTimeout(() => {
@@ -79,8 +79,8 @@ export class BackendService {
   }
 
   getClubById(id: number): Observable<Entity> {
-    this.logService.log('BackendService', `Request GET /club/${id}`);
     const obs$ = new Observable<Entity>((subscriber) => {
+      this.logService.log('BackendService', `Request GET /club/${id}`);
       setTimeout(() => {
         this.logService.log('BackendService', `Response GET /clubs/${id}`);
         const entity = this.clubs.find((e) => e.id === id);
