@@ -13,6 +13,7 @@ import { CodeMonkeyClubComponent } from './code-monkey-club/code-monkey-club.com
 import { CodeMonkeyNetworkComponent } from './code-monkey-network/code-monkey-network.component';
 import { EntityCardComponent } from './entity-card/entity-card.component';
 import { StatusBarComponent } from './status-bar/status-bar.component';
+import { ExamplesComponent } from './examples/examples.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { StatusBarComponent } from './status-bar/status-bar.component';
     EntityCardComponent,
     CodeMonkeyNetworkComponent,
     CodeMonkeyClubComponent,
-    StatusBarComponent
+    StatusBarComponent,
+    ExamplesComponent
   ],
   imports: [
     CommonModule,
