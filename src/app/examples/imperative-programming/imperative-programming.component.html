@@ -1,3 +1,34 @@
 <button mat-button color="primary" (click)="demo()">Demo!</button>
 <mat-label fxLayout="row">sum = a + b</mat-label>
-<mat-label fxLayout="row">sum ({{sum}}) = a ({{a}}) + b ({{b}}) </mat-label>
+<mat-label fxLayout="row"
+  >sum ({{ sum }}) = a ({{ a }}) + b ({{ b }})
+</mat-label>
+<div fxLayout="row wrap">
+  <p fxFlex="grow">
+    In imperative programming it is quite simple. A sum is the (instant!) value
+    of a and b.
+  </p>
+  <textarea fxFlex="grow" class="code">
+// variables representing values
+let a = 1;
+let b = 2;
+
+// value of expression (a + b) is instantly assigned to sum
+let sum = a + b; // 3
+console.log('sum', sum);
+
+// assigning a new value has no effect on sum
+a = 2;
+b = 2;
+console.log('sum', sum); // 3, unchanged
+
+// incase a or b is updated, sum needs to be re-assigned with new values in a and b
+sum = a + b;
+console.log('sum', sum); // 4, re-evaluated expression
+  </textarea>
+  <p fxFlex="grow">
+    In the abvoe example it shows once the sum is assigned, assigning a new
+    value to a or b has now effect on the sum itself. In case sum needs to be
+    updated, the expression needs to be re-evaluated.
+  </p>
+</div>

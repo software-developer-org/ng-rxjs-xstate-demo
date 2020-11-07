@@ -3,3 +3,34 @@
 <mat-label fxLayout="row"
   >sum$ ({{ sum$ | async }}) = a$ ({{ a$ | async }}) + b$ ({{ b$ | async }})
 </mat-label>
+<div fxLayout="row wrap" class="text">
+  <p fxFlex="grow">
+In reactive programming streams are respresented by one core type in RxJS: Observable.
+<br>Operations on an Observable can be done through pipe operators like map, merge, catchError, etc.
+<br>A Subject is a special type of Observable allowing multicasting.
+  </p>
+  <textarea fxFlex="grow" class="code">
+  // variables representing streams, values are handled via streams
+  // a stream in RxJS is represented by an Observable
+  const a$: Subject<number> = new Subject<number>();
+  // Subject is a special type of Observable allowing multicast to many Observers (=subscribers)
+  const b$: Subject<number> = new Subject<number>();
+
+  // combine both streams a$ and b$ to one stream
+  const ab$: Observable<number[]> = combineLatest([a$, b$]);
+  const sum$: Observable<number> = ab$
+    // a pipe allows chaining
+    .pipe(
+      // map operator
+      map(([aValue, bValue]) => aValue + bValue)
+    );
+
+  sum$.subscribe((total) => console.log('sum from stream', total)); // subscribe on streams a$ and b$
+  a$.next(1); // pass value to a$ stream, ab$ stream is not notified yet
+
+  // ab$ gets notified in case all observables has at least one value casted
+  b$.next(2); // ab$: [1,2] => 3 is logged
+  a$.next(2); // ab$: [2,2] => 4 is logged
+  b$.next(3); // ab$: [2,3] => 5 is logged
+  </textarea>
+</div>
