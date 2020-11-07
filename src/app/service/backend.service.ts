@@ -27,7 +27,7 @@ export class BackendService {
       .fill('')
       .forEach((_, index) =>
         this.clubs.push(
-          new Entity(index, 'Code Monkey Club ' + index, [
+          new Entity(index, 'Code Monkey Club ' + (index + 1), [
             'Lorem ipsum dolor sit',
             'amet consectetur adipisicing elit.',
             'Enim excepturi odio cum eligendi,',
@@ -39,7 +39,7 @@ export class BackendService {
       .fill('')
       .forEach((_, index) =>
         this.members.push(
-          new Entity(index, 'Monkey ' + index, [
+          new Entity(index, 'Monkey ' + (index + 1), [
             'Ready for project Chaos',
             Math.random() < 0.5 ? MemberStatus.Noob : MemberStatus.Pro,
           ])
@@ -60,7 +60,7 @@ export class BackendService {
           this.logService.log('BackendService', 'Response GET /clubs');
           subscriber.next(this.clubs);
           subscriber.complete();
-        }, 3000);
+        }, 1000);
       }
     });
     return obs$;
