@@ -4,7 +4,7 @@ import { tap } from 'rxjs/operators';
 import { LogService } from '../service/log.service';
 
 @Component({
-  selector: 'app-status-bar',
+  selector: 'status-bar',
   templateUrl: './status-bar.component.html',
   styleUrls: ['./status-bar.component.scss'],
 })

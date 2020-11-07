@@ -6,7 +6,7 @@ import { LogService } from '../service/log.service';
 import { StateMachineUtils } from '../service/state-machine/state-machine.utils';
 
 @Component({
-  selector: 'app-code-monkey-clubs',
+  selector: 'code-monkey-clubs',
   templateUrl: './code-monkey-network.component.html',
   styleUrls: ['./code-monkey-network.component.scss'],
 })

@@ -20,7 +20,7 @@
 <div class="scroll">
   <div fxLayout="row wrap" fxLayoutAlign="center center">
     <a *ngFor="let club of clubs" [routerLink]="['/code-monkey-club', club.id]">
-      <app-entity-card [entity]="club"> </app-entity-card>
+      <entity-card [entity]="club"> </entity-card>
     </a>
   </div>
 </div>

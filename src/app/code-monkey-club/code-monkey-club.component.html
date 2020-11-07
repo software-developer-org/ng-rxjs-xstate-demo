@@ -43,13 +43,13 @@
   </mat-expansion-panel>
 
   <div fxLayout="row wrap" fxLayoutAlign="center center">
-    <app-entity-card
+    <entity-card
       *ngFor="let member of members"
       [entity]="member"
       (click)="enterChallenger(member)"
       [class.challenger]="isChallenger(member.id)"
       [class.noob]="isFirsttime(member) && !isChallenger(member.id)"
     >
-    </app-entity-card>
+    </entity-card>
   </div>
 </div>

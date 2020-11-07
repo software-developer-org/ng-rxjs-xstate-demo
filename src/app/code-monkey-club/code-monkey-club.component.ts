@@ -6,7 +6,7 @@ import { BackendService, Entity, MemberStatus } from '../service/backend.service
 import { LogService } from '../service/log.service';
 
 @Component({
-  selector: 'app-code-monkey-club',
+  selector: 'code-monkey-club',
   templateUrl: './code-monkey-club.component.html',
   styleUrls: ['./code-monkey-club.component.scss'],
 })
