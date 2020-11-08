@@ -1,14 +1,15 @@
-<button mat-button color="primary" (click)="demo()">Demo!</button>
-<mat-label fxLayout="row">sum = a + b</mat-label>
-<mat-label fxLayout="row"
-  >sum ({{ sum }}) = a ({{ a }}) + b ({{ b }})
-</mat-label>
-<div fxLayout="row wrap">
-  <p fxFlex="grow">
-    In imperative programming it is quite simple. A sum is the (instant!) value
-    of a and b.
-  </p>
-  <textarea fxFlex="grow" class="code">
+<div>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-button color="primary" (click)="demo()">Demo!</button>
+    <mat-label>sum ({{ sum }}) = a ({{ a }}) + b ({{ b }}) </mat-label>
+  </div>
+
+  <div fxLayout="row wrap">
+    <p fxFlex="grow">
+      In imperative programming it is quite simple. A sum is the (instant!)
+      value of a and b.
+    </p>
+    <textarea fxFlex="grow" class="code">
 // variables representing values
 let a = 1;
 let b = 2;
@@ -25,10 +26,55 @@ console.log('sum', sum); // 3, unchanged
 // incase a or b is updated, sum needs to be re-assigned with new values in a and b
 sum = a + b;
 console.log('sum', sum); // 4, re-evaluated expression
-  </textarea>
-  <p fxFlex="grow">
-    In the abvoe example it shows once the sum is assigned, assigning a new
-    value to a or b has now effect on the sum itself. In case sum needs to be
-    updated, the expression needs to be re-evaluated.
+    </textarea>
+    <p fxFlex="grow">
+      In the abvoe example it shows once the sum is assigned, assigning a new
+      value to a or b has now effect on the sum itself. In case sum needs to be
+      updated, the expression needs to be re-evaluated.
+    </p>
+  </div>
+</div>
+
+<div fxLayout="row wrap">
+  <h3 fxFlex="grow" >Sharing and Updating</h3>
+
+  <mat-slide-toggle fxFlex="grow" [(ngModel)]="onlyEven"
+    >even number</mat-slide-toggle
+  >
+  <mat-slide-toggle fxFlex="grow" [(ngModel)]="greaterThanFive"
+    >greater than five</mat-slide-toggle
+  >
+  <mat-label fxFlex="grow">data: {{ data }} </mat-label>
+  <p>
+    Sharing and updating data in an imperative style requires explicit updates.
   </p>
+  <textarea fxFlex="grow" class="code">
+private _onlyEven = false;
+get onlyEven(): boolean {
+  return this._onlyEven;
+}
+set onlyEven(onlyEven: boolean) {
+  this._onlyEven = onlyEven;
+  this.updateData();
+}
+
+private _greaterThanFive = false;
+get greaterThanFive(): boolean {
+  return this._greaterThanFive;
+}
+set greaterThanFive(greaterThanFive: boolean) {
+  this._greaterThanFive = greaterThanFive;
+  this.updateData();
+}
+
+data: number[];
+
+updateData(): void {
+  this.data = new Array(10)
+    .fill(0)
+    .map((_, index) => index + 1)
+    .filter((val) => (this.onlyEven ? val % 2 === 0 : val))
+    .filter((val) => (this.greaterThanFive ? val > 5 : val));
+}
+  </textarea>
 </div>

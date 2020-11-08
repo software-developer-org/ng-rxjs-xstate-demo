@@ -8,11 +8,15 @@ export class Exec {
   providedIn: 'root',
 })
 export class ExampleService {
-  timeout = 200;
 
   constructor(private logService: LogService) {}
 
-  do(source: string, clearLogs: boolean, commands: Exec[]): void {
+  do(
+    source: string,
+    timeout: number,
+    clearLogs: boolean,
+    commands: Exec[]
+  ): void {
     if (clearLogs) {
       this.logService.clear();
     }
@@ -22,7 +26,7 @@ export class ExampleService {
         const result = command.fn ? command.fn() : '';
         // then log!
         this.logService.log(source, command.log + result);
-      }, this.timeout * index + this.timeout);
+      }, timeout * index + timeout);
     });
   }
 }

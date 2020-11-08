@@ -11,6 +11,28 @@ export class ImperativeProgrammingComponent implements OnInit {
   a: number;
   b: number;
 
+  // tslint:disable-next-line:variable-name
+  private _onlyEven = false;
+  get onlyEven(): boolean {
+    return this._onlyEven;
+  }
+  set onlyEven(onlyEven: boolean) {
+    this._onlyEven = onlyEven;
+    this.updateData();
+  }
+
+  // tslint:disable-next-line:variable-name
+  private _greaterThanFive = false;
+  get greaterThanFive(): boolean {
+    return this._greaterThanFive;
+  }
+  set greaterThanFive(greaterThanFive: boolean) {
+    this._greaterThanFive = greaterThanFive;
+    this.updateData();
+  }
+
+  data: number[];
+
   constructor(private exampleService: ExampleService) {}
 
   ngOnInit(): void {}
@@ -28,6 +50,14 @@ export class ImperativeProgrammingComponent implements OnInit {
       new Exec('b = ', () => (this.b = 3)),
       new Exec('sum = ', () => this.sum),
     ];
-    this.exampleService.do('Imperative Programming', true, commands);
+    this.exampleService.do('Imperative Programming', 200, true, commands);
+  }
+
+  updateData(): void {
+    this.data = new Array(10)
+      .fill(0)
+      .map((_, index) => index + 1)
+      .filter((val) => (this.onlyEven ? val % 2 === 0 : val))
+      .filter((val) => (this.greaterThanFive ? val > 5 : val));
   }
 }

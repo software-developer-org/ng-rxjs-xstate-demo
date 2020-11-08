@@ -41,6 +41,6 @@ export class ReactiveProgrammingComponent implements OnInit {
       }),
       new Exec('sum$ = 5 // automatically updated '),
     ];
-    this.exampleService.do('Reactive Programming', true, commands);
+    this.exampleService.do('Reactive Programming', 200, true, commands);
   }
 }
