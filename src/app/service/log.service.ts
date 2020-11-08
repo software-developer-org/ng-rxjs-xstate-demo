@@ -20,7 +20,7 @@ export class LogService {
     this.logs = null;
   }
 
-  private addLog(source: string, ...args: any[]): void {
+  private addLog(source: string, args: any[]): void {
     let prefix = getTime() + ' ' + source;
     while (prefix.length < 40) {
       prefix += ' ';
@@ -28,12 +28,12 @@ export class LogService {
 
     // concat arguments into one log message
     const logMessage =
-      prefix +
+      prefix + ':' +
       args.reduce((last, current) => {
         // get stack trace in case of error
         const stringVal = current?.stack ? current.stack : current;
         return last + ' ' + stringVal;
-      }, ':');
+      }, '');
 
     // adds a log in a new line
     this.logs = !this.logs
