@@ -19,7 +19,6 @@ export class ReactiveProgrammingComponent implements OnInit {
 
   data$ = combineLatest([this.onlyEven$, this.greaterThanFive$]).pipe(
     map(([onlyEven, greaterThanFive]) => {
-      console.log('>>>data');
       const data = new Array(10)
         .fill(0)
         .map((_, index) => index + 1)
