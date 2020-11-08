@@ -1,15 +1,20 @@
-<button mat-button color="primary" (click)="demo()">Demo!</button>
-<mat-label fxLayout="row">sum$ = a$ + b$</mat-label>
-<mat-label fxLayout="row"
-  >sum$ ({{ sum$ | async }}) = a$ ({{ a$ | async }}) + b$ ({{ b$ | async }})
-</mat-label>
-<div fxLayout="row wrap" class="text">
-  <p fxFlex="grow">
-In reactive programming streams are respresented by one core type in RxJS: Observable.
-<br>Operations on an Observable can be done through pipe operators like map, merge, catchError, etc.
-<br>A Subject is a special type of Observable allowing multicasting.
-  </p>
-  <textarea fxFlex="grow" class="code">
+<div>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-button color="primary" (click)="demo()">Demo!</button>
+    <mat-label fxLayout="row"
+      >sum$ ({{ sum$ | async }}) = a$ ({{ a$ | async }}) + b$ ({{ b$ | async }})
+    </mat-label>
+  </div>
+
+  <div fxLayout="row wrap">
+    <p fxFlex="grow">
+      In reactive programming streams are respresented by one core type in RxJS:
+      Observable.
+      <br />Operations on an Observable can be done through pipe operators like
+      map, merge, catchError, etc. <br />A Subject is a special type of
+      Observable allowing multicasting.
+    </p>
+    <textarea fxFlex="grow" class="code">
   // variables representing streams, values are handled via streams
   // a stream in RxJS is represented by an Observable
   const a$: Subject<number> = new Subject<number>();
@@ -32,5 +37,38 @@ In reactive programming streams are respresented by one core type in RxJS: Obser
   b$.next(2); // ab$: [1,2] => 3 is logged
   a$.next(2); // ab$: [2,2] => 4 is logged
   b$.next(3); // ab$: [2,3] => 5 is logged
+    </textarea>
+  </div>
+</div>
+
+<div fxLayout="row wrap">
+  <h3 fxFlex="grow">Sharing and Updating</h3>
+
+  <mat-slide-toggle fxFlex="grow" [checked]="onlyEven$ | async" (change)="onlyEven$.next($event.checked)"
+    >even number</mat-slide-toggle
+  >
+  <mat-slide-toggle fxFlex="grow" [checked]="greaterThanFive$ | async" (change)="greaterThanFive$.next($event.checked)"
+    >greater than five</mat-slide-toggle
+  >
+  <mat-label fxFlex="grow">data: {{ data$ | async }} </mat-label>
+  <p>
+    Sharing and updating data in an reactive style requires defining Observables only.
+  </p>
+  <textarea fxFlex="grow" class="code">
+onlyEven$ = new Subject<boolean>();
+
+greaterThanFive$ = new Subject<boolean>();
+
+data$ = combineLatest([this.onlyEven$, this.greaterThanFive$]).pipe(
+  map(([onlyEven, greaterThanFive]) => {
+    console.log('>>>data');
+    const data = new Array(10)
+      .fill(0)
+      .map((_, index) => index + 1)
+      .filter((val) => (onlyEven ? val % 2 === 0 : val))
+      .filter((val) => (greaterThanFive ? val > 5 : val));
+    return data;
+  })
+);
   </textarea>
 </div>

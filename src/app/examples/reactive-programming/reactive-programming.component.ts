@@ -13,7 +13,29 @@ export class ReactiveProgrammingComponent implements OnInit {
   b$ = new Subject<number>();
   sum$ = combineLatest([this.a$, this.b$]).pipe(map(([a, b]) => a + b));
 
-  constructor(private exampleService: ExampleService) {}
+  onlyEven$ = new Subject<boolean>();
+
+  greaterThanFive$ = new Subject<boolean>();
+
+  data$ = combineLatest([this.onlyEven$, this.greaterThanFive$]).pipe(
+    map(([onlyEven, greaterThanFive]) => {
+      console.log('>>>data');
+      const data = new Array(10)
+        .fill(0)
+        .map((_, index) => index + 1)
+        .filter((val) => (onlyEven ? val % 2 === 0 : val))
+        .filter((val) => (greaterThanFive ? val > 5 : val));
+      return data;
+    })
+  );
+
+  constructor(private exampleService: ExampleService) {
+    // init data
+    setTimeout(() => {
+      this.onlyEven$.next(false);
+      this.greaterThanFive$.next(false);
+    }, 100);
+  }
 
   ngOnInit(): void {}
 
