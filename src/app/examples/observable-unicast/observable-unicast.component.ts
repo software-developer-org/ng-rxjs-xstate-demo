@@ -25,6 +25,6 @@ export class ObservableUnicastComponent implements OnInit {
         return '';
       }),
     ];
-    this.exampleService.do('Imperative Programming', 200, true, commands);
+    this.exampleService.do('Reactive Programming', 200, true, commands);
   }
 }

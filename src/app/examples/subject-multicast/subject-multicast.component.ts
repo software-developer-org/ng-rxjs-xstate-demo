@@ -24,7 +24,7 @@ export class SubjectMulticastComponent implements OnInit {
         return random;
       }),
     ];
-    this.exampleService.do('Imperative Programming', 200, true, commands);
+    this.exampleService.do('Reactive Programming', 200, true, commands);
   }
 
 }
