@@ -14,8 +14,8 @@
     const obs$: Observable<number> = new Observable<number>((subscriber) => {
       subscriber.next(Math.random());
     });
-    obs$.subscribe((value) => console.log('Observable: subscriber 1:', value)); // Observable: subscriber 1: 0.6785303847338093
-    obs$.subscribe((value) => console.log('Observable: subscriber 2:', value)); // Observable: subscriber 2: 0.01241168468788234
+    obs$.subscribe((value) => console.log('Observable: subscriber 1:', value));
+    obs$.subscribe((value) => console.log('Observable: subscriber 2:', value));
     </textarea
   >
 </div>
